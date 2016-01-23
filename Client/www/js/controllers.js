@@ -98,15 +98,11 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('CreateCtrl', function($scope, $cordovaCamera) {
+.controller('CreateCtrl', function($scope, $cordovaCamera, $ionicPopup) {
 
-  var clicked_id = "";
-
-  $scope.ShowClass = function(event)
-  {
-    clicked_id = event.target.class;
-  }
-  $scope.takePicture = function() {
+  $scope.pictures = [];
+  var jsonVariable = {};
+  $scope.takePicture = function(event) {
         var options = {
             quality : 75,
             destinationType : Camera.DestinationType.DATA_URL,
@@ -121,8 +117,14 @@ angular.module('starter.controllers', [])
 
         $cordovaCamera.getPicture(options).then(function(imageData) {
             $scope.imgURI = "data:image/jpeg;base64," + imageData;
+            var value = event.target.id;
+            jsonVariable[value] = $scope.imgURI;
+            $scope.pictures.push(jsonVariable);
+
         }, function(err) {
             // An error occured. Show a message to the user
         });
     }
+
+    $scope.save = function(){}
 });
