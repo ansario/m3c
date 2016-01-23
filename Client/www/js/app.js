@@ -91,6 +91,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     templateUrl: 'templates/Register.html'
   })
 
+  .state('qr', {
+    url: '/qr',
+    controller: 'QRCtrl',
+    templateUrl: 'templates/qr.html'
+  })
+
   .state('create', {
     url: '/create',
     controller: 'CreateCtrl',

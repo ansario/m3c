@@ -3,8 +3,28 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope, $state) {
 
   $scope.create = function() {
-    $state.go('create');
+    $state.go('qr');
   }
+})
+
+.controller('QRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
+
+  document.addEventListener("deviceready", function () {
+
+  $cordovaBarcodeScanner
+    .scan()
+    .then(function(barcodeData) {
+      QRID.setID(barcodeData.text);
+      $state.go('create');
+    }, function(error) {
+      // An error occurred
+    });
+
+
+
+
+}, false);
+
 })
 
 .controller('RegisterCtrl', function($scope, $http, $state) {
@@ -98,8 +118,9 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('CreateCtrl', function($scope, $cordovaCamera, $ionicPopup) {
+.controller('CreateCtrl', function($scope, $cordovaCamera, $ionicPopup, QRID) {
 
+  $scope.qrid = QRID.getID();
   $scope.pictures = [];
   var jsonVariable = {};
   $scope.takePicture = function(event) {
@@ -127,6 +148,7 @@ angular.module('starter.controllers', [])
     }
 
     $scope.save = function() {
+
 
       $http ({
           url: 'http://ansario.com:3000/create',

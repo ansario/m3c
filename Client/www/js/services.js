@@ -1,5 +1,20 @@
 angular.module('starter.services', [])
 
+.factory('QRID', function () {
+  var ID = "";
+
+  return {
+    getID: function () {
+      return ID;
+    },
+    setID: function(value) {
+     ID = value;
+    }
+  };
+
+})
+
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 
