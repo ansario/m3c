@@ -7,6 +7,7 @@ var dviSchema = mongoose.Schema({
     status: String,
     geotag: String,
     physical_description: {
+      body_condition:String,
       general_condition:String,
       apparent_sex: String,
       age_group: String,
@@ -16,14 +17,14 @@ var dviSchema = mongoose.Schema({
       head_hair_length: String,
       eye_color: String,
       facial_hair: String,
-      race: String,
+      race: String
     },
     associated_evidence: {
       clothing: String,
       footwear: String,
       eyewear: String,
       personal_items: String,
-      identity_documents: String,
+      identity_documents: String
     },
     recorded_information: {
       full_length_img: { data: Buffer, contentType: String },
@@ -32,7 +33,7 @@ var dviSchema = mongoose.Schema({
       fvoh_img: { data: Buffer, contentType: String },
       elevated_view_img: { data: Buffer, contentType: String },
       unique_features_img: { data: Buffer, contentType: String },
-      personal_effects_img: { data: Buffer, contentType: String },
+      personal_effects_img: { data: Buffer, contentType: String }
     }
     //a.img.data = fs.readFileSync(imgPath);
     //a.img.contentType = 'image/png';
