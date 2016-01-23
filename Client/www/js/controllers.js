@@ -266,7 +266,7 @@ angular.module('starter.controllers', [])
       $http ({
           url: 'http://ansario.com:3000/create',
           method: 'POST',
-          data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
+          //data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
