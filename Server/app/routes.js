@@ -18,7 +18,8 @@ app.post('/login',
 
 
 app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
-      res.sendStatus(200);
+
+      res.send(200);
     });
 
 };

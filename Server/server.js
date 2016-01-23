@@ -1,5 +1,6 @@
 var express     = require('express');
 var app         = express();
+var bodyParser  = require('body-parser');
 var mongoose    = require('mongoose');
 var passport    = require('passport');
 
@@ -10,7 +11,7 @@ connection = mongoose.connect(configDB.url);
 require('./config/passport')(passport); // pass passport for configuration
 
 var port = process.env.PORT || 3000; // used to create, sign, and verify tokens
-
+app.use(bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
