@@ -34,7 +34,8 @@ var dviSchema = mongoose.Schema({
       unique_features_img: { data: Buffer, contentType: String },
       personal_effects_img: { data: Buffer, contentType: String },
     }
-
+    //a.img.data = fs.readFileSync(imgPath);
+    //a.img.contentType = 'image/png';
 
 });
 

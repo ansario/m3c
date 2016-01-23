@@ -1,6 +1,11 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope, $state) {
+
+  $scope.create = function() {
+    $state.go('create');
+  }
+})
 
 .controller('RegisterCtrl', function($scope, $http, $state) {
 
@@ -20,7 +25,7 @@ angular.module('starter.controllers', [])
 
     // return $state.go('tab.dash');
     $http ({
-        url: 'http://localhost:3000/signup',
+        url: 'http://ansario.com:3000/signup',
         method: 'POST',
         data: "&email="+encodeURIComponent(emailaddress) +"&password="+encodeURIComponent(password),
         headers: {
@@ -50,7 +55,7 @@ angular.module('starter.controllers', [])
 
 
     $http ({
-        url: 'http://localhost:3000/login',
+        url: 'http://ansario.com:3000/login',
         method: 'POST',
         data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
         headers: {
@@ -90,5 +95,42 @@ angular.module('starter.controllers', [])
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
+  };
+})
+
+.controller('CreateCtrl', function($scope) {
+  $scope.groups = [];
+  // for (var i=0; i<10; i++) {
+  //   $scope.groups[i] = {
+  //     name: i,
+  //     items: []
+  //   };
+  //   for (var j=0; j<3; j++) {
+  //     $scope.groups[i].items.push(i + '-' + j);
+  //   }
+  // }
+
+  $scope.groups = [
+    {
+      name: "Identity/Status/Location", items:
+        [
+          "Tets"
+        ]
+      }
+  ]
+
+  /*
+   * if given group is the selected group, deselect it
+   * else, select the given group
+   */
+  $scope.toggleGroup = function(group) {
+    if ($scope.isGroupShown(group)) {
+      $scope.shownGroup = null;
+    } else {
+      $scope.shownGroup = group;
+    }
+  };
+  $scope.isGroupShown = function(group) {
+    return $scope.shownGroup === group;
   };
 });
