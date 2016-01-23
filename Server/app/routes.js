@@ -22,8 +22,8 @@ app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
       res.send(200);
     });
 
-};
+  app.post('/create', function(req, res) {
+      console.log(req);
+  });
 
-app.post('/create', function(req, res) {
-    console.log(req);
-})
+};

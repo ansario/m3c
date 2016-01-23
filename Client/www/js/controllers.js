@@ -115,7 +115,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('CreateCtrl', function($scope, $cordovaCamera, $ionicPopup, QRID, $http) {
+.controller('CreateCtrl', function($scope, $cordovaCamera, $ionicPopup, QRID, $http, $ionicModal) {
 
   $scope.descriptionFields = [
     { 'key':'body_condition',
@@ -233,6 +233,8 @@ angular.module('starter.controllers', [])
     return jsonObj;
   };
 
+
+
   $scope.qrid = QRID.getID();
   $scope.pictures = [];
   var jsonVariable = {};
@@ -259,25 +261,50 @@ angular.module('starter.controllers', [])
             // An error occured. Show a message to the user
         });
     }
+    $ionicModal.fromTemplateUrl('my-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
 
     $scope.save = function() {
-      getAllDataAsJson();
+      var jsonObj = getAllDataAsJson();
 
       $http ({
           url: 'http://ansario.com:3000/create',
           method: 'POST',
+          data: jsonObj,
           //data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
           },
         }).then(function(data) {
 
-          if (data.data.token) {
-            sessionStorage.setItem("token",data.data.token);
-            return $state.go('tab.dash');
-          } else {
-            return $state.go('login');
-          }
+          // if (data.data.token) {
+          //   sessionStorage.setItem("token",data.data.token);
+          //   return $state.go('tab.dash');
+          // } else {
+          //   return $state.go('login');
+          // }
         })
     }
 });
