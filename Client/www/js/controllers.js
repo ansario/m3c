@@ -115,7 +115,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('CreateCtrl', function($scope, $cordovaCamera, $ionicPopup, QRID, $http, $ionicModal) {
+.controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
 
   $scope.descriptionFields = [
     { 'key':'body_condition',
@@ -211,6 +211,29 @@ angular.module('starter.controllers', [])
     }
   ];
 
+  $scope.getLoc = function() {
+
+   $cordovaGeolocation
+     .getCurrentPosition()
+     .then(function(position) {
+       var lat = position.coords.latitude;
+       var long = position.coords.longitude;
+
+       var latString = lat.toString();
+       var longString = long.toString();
+       $scope.geoString  = "(" + latString + "," + longString + ")";
+
+
+       console.log($scope.lat);
+       console.log($scope.long);
+       console.log($scope.geoString);
+     }, function(err) {
+
+       //An error occurred. Show message to the user
+     });
+
+  }
+
   var getAllDataAsJson = function() {
     var jsonObj = {};
 
@@ -265,8 +288,8 @@ angular.module('starter.controllers', [])
         });
     }
 
-    
-    
+
+
     $ionicModal.fromTemplateUrl('my-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -294,7 +317,7 @@ angular.module('starter.controllers', [])
 
     $scope.save = function() {
       var jsonObj = getAllDataAsJson();
-
+      console.log($scope.pictures);
       // $scope.pictures.forEach(function (arrayItem)
       // {
       //     jsonObj[arrayItem[]];
