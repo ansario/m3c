@@ -3,8 +3,25 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope, $state) {
 
   $scope.create = function() {
-    $state.go('create');
+    $state.go('qr');
   }
+})
+
+.controller('QRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
+
+  document.addEventListener("deviceready", function () {
+
+  $cordovaBarcodeScanner
+    .scan()
+    .then(function(barcodeData) {
+      QRID.setID(barcodeData.text);
+      $state.go('create');
+    }, function(error) {
+      // An error occurred
+    });
+
+}, false);
+
 })
 
 .controller('RegisterCtrl', function($scope, $http, $state) {
@@ -98,7 +115,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('CreateCtrl', function($scope, $cordovaCamera) {
+.controller('CreateCtrl', function($scope, $cordovaCamera, $ionicPopup, QRID) {
 
   $scope.descriptionFields = [
     { 'key':'body_condition',
@@ -216,13 +233,10 @@ angular.module('starter.controllers', [])
     return jsonObj;
   };
 
-  var clicked_id = "";
-
-  $scope.ShowClass = function(event)
-  {
-    clicked_id = event.target.class;
-  };
-  $scope.takePicture = function() {
+  $scope.qrid = QRID.getID();
+  $scope.pictures = [];
+  var jsonVariable = {};
+  $scope.takePicture = function(event) {
         var options = {
             quality : 75,
             destinationType : Camera.DestinationType.DATA_URL,
@@ -237,8 +251,33 @@ angular.module('starter.controllers', [])
 
         $cordovaCamera.getPicture(options).then(function(imageData) {
             $scope.imgURI = "data:image/jpeg;base64," + imageData;
+            var value = event.target.id;
+            jsonVariable[value] = $scope.imgURI;
+            $scope.pictures.push(jsonVariable);
+
         }, function(err) {
             // An error occured. Show a message to the user
         });
+    }
+
+    $scope.save = function() {
+
+
+      $http ({
+          url: 'http://ansario.com:3000/create',
+          method: 'POST',
+          data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }).then(function(data) {
+
+          if (data.data.token) {
+            sessionStorage.setItem("token",data.data.token);
+            return $state.go('tab.dash');
+          } else {
+            return $state.go('login');
+          }
+        })
     }
 });

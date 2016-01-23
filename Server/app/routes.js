@@ -23,3 +23,7 @@ app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
     });
 
 };
+
+app.post('/create', function(req, res) {
+    console.log(req);
+})
