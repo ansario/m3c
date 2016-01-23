@@ -14,18 +14,16 @@ angular.module('starter.controllers', [])
 
 .controller('QRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
 
-  document.addEventListener("deviceready", function () {
-
-  $cordovaBarcodeScanner
-    .scan()
-    .then(function(barcodeData) {
-      QRID.setID(barcodeData.text);
-      $state.go('create');
-    }, function(error) {
-      // An error occurred
-    });
-
-}, false);
+  document.addEventListener("deviceready", function() {
+    $cordovaBarcodeScanner
+      .scan()
+      .then(function (barcodeData) {
+        QRID.setID(barcodeData.text);
+        $state.go('create');
+      }, function (error) {
+        // An error occurred
+      });
+  }, false);
 
 })
 
@@ -104,75 +102,51 @@ angular.module('starter.controllers', [])
 
 
 
-  //.controller('MapCtrl', function($scope) {
-  //
-  //})
 
-  .controller('MapCtrl', function($scope, $ionicLoading, $compile) {
-    //function initialize() {
-    //  var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
-    //
-    //  var mapOptions = {
-    //    center: myLatlng,
-    //    zoom: 16,
-    //    mapTypeId: google.maps.MapTypeId.ROADMAP
-    //  };
-    //  var map = new google.maps.Map(document.getElementById("map"),
-    //    mapOptions);
-    //
-    //  //Marker + infowindow + angularjs compiled ng-click
-    //  var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
-    //  var compiled = $compile(contentString)($scope);
-    //
-    //  var infowindow = new google.maps.InfoWindow({
-    //    content: compiled[0]
-    //  });
-    //
-    //  var marker = new google.maps.Marker({
-    //    position: myLatlng,
-    //    map: map,
-    //    title: 'Uluru (Ayers Rock)'
-    //  });
-    //
-    //  google.maps.event.addListener(marker, 'click', function() {
-    //    infowindow.open(map,marker);
-    //  });
-    //
-    //  $scope.map = map;
-    //}
-    //google.maps.event.addDomListener(window, 'load', initialize);
-    //
-    //$scope.centerOnMe = function() {
-    //  if(!$scope.map) {
-    //    return;
-    //  }
-    //
-    //  $scope.loading = $ionicLoading.show({
-    //    content: 'Getting current location...',
-    //    showBackdrop: false
-    //  });
-    //
-    //  navigator.geolocation.getCurrentPosition(function(pos) {
-    //    $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-    //    $scope.loading.hide();
-    //  }, function(error) {
-    //    alert('Unable to get location: ' + error.message);
-    //  });
-    //};
-    //
-    //$scope.clickTest = function() {
-    //  alert('Example of infowindow with ng-click')
-    //};
+
+  .controller('MapCtrl', function($scope, $cordovaGeolocation) {
+
+
+    $scope.la = sessionStorage.getItem("lat");
+    $scope.lo = sessionStorage.getItem("long");
 
   })
 
+    //$scope.addMarker() = function(){
+    //   id: 0,
+    //    coords: {
+    //      latitude: getCoords.lati
+    //      longitude: getCoords.longi
+    //    },
+    //    options: { draggable: true },
+    //    events: {
+    //      dragend: function (marker, eventName, args) {
+    //        $log.log('marker dragend');
+    //        var lat = marker.getPosition().lat();
+    //        var lon = marker.getPosition().lng();
+    //        $log.log(lat);
+    //        $log.log(lon);
+    //
+    //        $scope.marker.options = {
+    //          draggable: true,
+    //          labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+    //          labelAnchor: "100 0",
+    //          labelClass: "marker-labels"
+    //        };
+    //      }
+    //    }
+    //
+    //}
 
-.controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, NgMap, QRID, $ionicModal) {
-  NgMap.getMap().then(function(map) {
-    console.log(map.getCenter());
-    console.log('markers', map.markers);
-    console.log('shapes', map.shapes);
-  });
+
+
+  //.controller('MapCtrl', function($scope, $ionicLoading, $compile) {
+  //
+  //})
+
+
+.controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, QRID, $ionicModal) {
+
 
   $scope.descriptionFields = [
     { 'key':'body_condition',
@@ -370,26 +344,18 @@ angular.module('starter.controllers', [])
 
   $scope.getLoc = function() {
 
-   $cordovaGeolocation
-     .getCurrentPosition()
-     .then(function(position) {
-       var lat = position.coords.latitude;
-       var long = position.coords.longitude;
-
-       var latString = lat.toString();
-       var longString = long.toString();
+       var latString = sessionStorage.getItem("lat").toString();
+       var longString = sessionStorage.getItem("long").toString();
        $scope.geoString  = "(" + latString + "," + longString + ")";
 
 
-       console.log($scope.lat);
-       console.log($scope.long);
        console.log($scope.geoString);
      }, function(err) {
 
        //An error occurred. Show message to the user
-     });
+     }
 
 
-  }
+
 
 });
