@@ -30,10 +30,11 @@
     </label>
     <label class="item item-input">
       <span class="input-label">Geotag</span>
-      <input type="text" placeholder="-83.2, 32.0" readonly>
-      <button class="button button-positive button-clear pull-right">
-  Get Geotag
-</button>
+      <button class="button button-positive button-clear pull-right" ng-click="getLoc()">
+        Get Geotag
+      </button>
+      <input type="text" value="{{geoString}}">
+
     </label>
     <div class="item item-divider">
     Description

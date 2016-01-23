@@ -80,7 +80,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('CreateCtrl', function($scope, $cordovaCamera) {
+.controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation) {
 
   var clicked_id = "";
 
@@ -107,4 +107,40 @@ angular.module('starter.controllers', [])
             // An error occured. Show a message to the user
         });
     }
+
+  //var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  //$cordovaGeolocation
+  //  .getCurrentPosition(posOptions)
+  //  .then(function (position) {
+  //    var lat  = position.coords.latitude
+  //    var long = position.coords.longitude
+  //  }, function(err) {
+  //    // error
+  //  });
+
+
+  $scope.getLoc = function() {
+
+   $cordovaGeolocation
+     .getCurrentPosition()
+     .then(function(position) {
+       var lat = position.coords.latitude;
+       var long = position.coords.longitude;
+
+       var latString = lat.toString();
+       var longString = long.toString();
+       $scope.geoString  = "(" + latString + "," + longString + ")";
+
+
+       console.log($scope.lat);
+       console.log($scope.long);
+       console.log($scope.geoString);
+     }, function(err) {
+
+       //An error occurred. Show message to the user
+     });
+
+
+  }
+
 });
