@@ -1,14 +1,14 @@
 <ion-view view-title="Create DVI Record">
   <style>
-  
+
   </style>
 
   <ion-content>
-    <div class="bar bar-header">
+    <!-- <div class="bar bar-header">
       <button class="button button-clear button-positive pull-right">Save</button>
     </div>
     <br>
-    <br>
+    <br> -->
     <H4>Identification: X3D32-SDASDD-SAS224</H4>
     <div class="list">
       <div class="item item-divider">
@@ -135,6 +135,18 @@
 <div class="item item-divider">
 Photographs
 </div>
+<label class="item item-input">
+  <span class="input-label">Full Length</span>
+  <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+      <img ng-show="imgURI === undefined" ng-src="http://placehold.it/30x30">
+      <button class="button" id="first" ng-click="takePicture()" data-ng-click="ShowId($event)">Take Picture</button>
+</label>
+<label class="item item-input">
+  <span class="input-label">Full Length</span>
+  <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+  <img ng-show="imgURI === undefined" ng-src="http://placehold.it/30x30">
+  <button class="button" id="second" ng-click="takePicture()">Take Picture</button>
+</label>
 
 
 

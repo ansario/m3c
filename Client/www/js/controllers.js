@@ -98,39 +98,31 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('CreateCtrl', function($scope) {
-  $scope.groups = [];
-  // for (var i=0; i<10; i++) {
-  //   $scope.groups[i] = {
-  //     name: i,
-  //     items: []
-  //   };
-  //   for (var j=0; j<3; j++) {
-  //     $scope.groups[i].items.push(i + '-' + j);
-  //   }
-  // }
+.controller('CreateCtrl', function($scope, $cordovaCamera) {
 
-  $scope.groups = [
-    {
-      name: "Identity/Status/Location", items:
-        [
-          "Tets"
-        ]
-      }
-  ]
+  var clicked_id = "";
 
-  /*
-   * if given group is the selected group, deselect it
-   * else, select the given group
-   */
-  $scope.toggleGroup = function(group) {
-    if ($scope.isGroupShown(group)) {
-      $scope.shownGroup = null;
-    } else {
-      $scope.shownGroup = group;
+  $scope.ShowClass = function(event)
+  {
+    clicked_id = event.target.class;
+  }
+  $scope.takePicture = function() {
+        var options = {
+            quality : 75,
+            destinationType : Camera.DestinationType.DATA_URL,
+            sourceType : Camera.PictureSourceType.CAMERA,
+            allowEdit : true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 300,
+            targetHeight: 300,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        }, function(err) {
+            // An error occured. Show a message to the user
+        });
     }
-  };
-  $scope.isGroupShown = function(group) {
-    return $scope.shownGroup === group;
-  };
 });
