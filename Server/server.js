@@ -4,6 +4,7 @@ var bodyParser  = require('body-parser');
 var flash       = require('connect-flash');
 var mongoose    = require('mongoose');
 var passport    = require('passport');
+var session     = require('express-session');
 
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var configDB = require('./config/database.js'); // get our config file
@@ -15,6 +16,7 @@ var port = process.env.PORT || 3000; // used to create, sign, and verify tokens
 app.use(bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(session({secret: 'M3C'}));
 app.use(flash());
 
 // Add headers
