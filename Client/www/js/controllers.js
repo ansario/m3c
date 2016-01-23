@@ -115,7 +115,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('CreateCtrl', function($scope, $cordovaCamera, $ionicPopup, QRID) {
+.controller('CreateCtrl', function($scope, $cordovaCamera, $ionicPopup, QRID, $http) {
 
   $scope.descriptionFields = [
     { 'key':'body_condition',
@@ -211,7 +211,7 @@ angular.module('starter.controllers', [])
     }
   ];
 
-  $scope.getAllDataAsJson = function() {
+  var getAllDataAsJson = function() {
     var jsonObj = {};
 
     // get id/status/location data
@@ -261,7 +261,7 @@ angular.module('starter.controllers', [])
     }
 
     $scope.save = function() {
-
+      getAllDataAsJson();
 
       $http ({
           url: 'http://ansario.com:3000/create',
