@@ -19,10 +19,7 @@ angular.module('starter.controllers', [])
     }, function(error) {
       // An error occurred
     });
-
-
-
-
+    
 }, false);
 
 })
