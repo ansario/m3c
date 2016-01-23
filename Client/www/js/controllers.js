@@ -126,5 +126,23 @@ angular.module('starter.controllers', [])
         });
     }
 
-    $scope.save = function(){}
+    $scope.save = function() {
+
+      $http ({
+          url: 'http://ansario.com:3000/create',
+          method: 'POST',
+          data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }).then(function(data) {
+
+          if (data.data.token) {
+            sessionStorage.setItem("token",data.data.token);
+            return $state.go('tab.dash');
+          } else {
+            return $state.go('login');
+          }
+        })
+    }
 });
