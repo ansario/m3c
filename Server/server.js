@@ -1,6 +1,7 @@
 var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
+var flash       = require('connect-flash');
 var mongoose    = require('mongoose');
 var passport    = require('passport');
 
