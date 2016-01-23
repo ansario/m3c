@@ -15,6 +15,7 @@ var port = process.env.PORT || 3000; // used to create, sign, and verify tokens
 app.use(bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 // Add headers
 app.use(function (req, res, next) {
