@@ -218,6 +218,8 @@ angular.module('starter.controllers', [])
     jsonObj['possible_identity'] = $scope.identityField.value;
     jsonObj['status'] = $scope.statusField.value;
 
+    
+
     // get all physical description data points
     jsonObj['physical_description'] = $scope.descriptionFields.reduce(function(m, v) {
       m[v.key] = v.value;
@@ -262,6 +264,9 @@ angular.module('starter.controllers', [])
             // An error occured. Show a message to the user
         });
     }
+
+    
+    
     $ionicModal.fromTemplateUrl('my-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
