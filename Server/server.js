@@ -9,13 +9,11 @@ connection = mongoose.connect(configDB.url);
 
 require('./config/passport')(passport); // pass passport for configuration
 
-var port = process.env.PORT || 80; // used to create, sign, and verify tokens
+var port = process.env.PORT || 3000; // used to create, sign, and verify tokens
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
 
-// app.set('view engine')
 // Add headers
 app.use(function (req, res, next) {
 

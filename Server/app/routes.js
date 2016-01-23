@@ -7,7 +7,7 @@ app.post('/login',
         // If this function gets called, authentication was successful.
         // `req.user` contains the authenticated user.
 
-        var token = jwt.sign({ user: req.user }, "DEADBODIES", { 
+        var token = jwt.sign({ user: req.user }, "DEADBODIES", {
                   expiresInMinutes: 1440 // expires in 24 hours
                 });
 
@@ -15,7 +15,7 @@ app.post('/login',
         // res.redirect('/users/' + req.user.username);
       });
 
-}
+
 
 app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
       res.sendStatus(200);
