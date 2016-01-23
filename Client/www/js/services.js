@@ -1,5 +1,6 @@
 angular.module('starter.services', [])
 
+
 .factory('QRID', function () {
   var ID = "";
 
