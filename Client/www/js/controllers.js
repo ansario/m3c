@@ -369,9 +369,9 @@ angular.module('starter.controllers', [])
 
     $scope.getLoc = function () {
 
-      var latString = sessionStorage.getItem("lat").toString();
-      var longString = sessionStorage.getItem("long").toString();
-      $scope.geoString = "(" + latString + "," + longString + ")";
+      $scope.latString = sessionStorage.getItem("lat").toString();
+      $scope.longString = sessionStorage.getItem("long").toString();
+      $scope.geoString = "(" + $scope.latString + "," + $scope.longString + ")";
 
 
       console.log($scope.geoString);
