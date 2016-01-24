@@ -31,7 +31,7 @@ angular
       when('/admin/:bodyId', {
         templateUrl: 'views/body-detail.html',
         controller: 'BodyCtrl'
-      }).
+      })
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'

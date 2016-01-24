@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         <tr ng-repeat="(key, value) in allBodies">
-          <td><a href="{{value._id}}">{{value._id}}</a></td>
+          <td><a href={{value._id}}>{{value._id}}</a></td>
           <td>{{value.possible_identity}}</td>
           <td>{{value.status}}</td>
           <td>{{value.geotag.latitude + ', ' + value.geotag.longitude}}</td>
