@@ -10,15 +10,13 @@
     <div class="mapWrap"  data-tap-disabled="true">
 
 
-       <map center='{{la}}, {{lo}}' zoom="12"></map>
+       <ng-map id="map" center='{{la}}, {{lo}}' zoom="12">
+       <marker position='{{la}}, {{lo}}' title="Hello World!"></marker>
+       </ng-map>
 
 
     </div>
 
-
-    <!--<ion-footer-bar class="bar-dark">-->
-      <!--<a ng-click="getCoords()" class="button button-icon icon ion-navigate">Find Me</a>-->
-    <!--</ion-footer-bar>-->
 
 
   </ion-content>

@@ -110,33 +110,39 @@ angular.module('starter.controllers', [])
     $scope.la = sessionStorage.getItem("lat");
     $scope.lo = sessionStorage.getItem("long");
 
-  })
 
-    //$scope.addMarker() = function(){
-    //   id: 0,
-    //    coords: {
-    //      latitude: getCoords.lati
-    //      longitude: getCoords.longi
-    //    },
-    //    options: { draggable: true },
-    //    events: {
-    //      dragend: function (marker, eventName, args) {
-    //        $log.log('marker dragend');
-    //        var lat = marker.getPosition().lat();
-    //        var lon = marker.getPosition().lng();
-    //        $log.log(lat);
-    //        $log.log(lon);
+    //$scope.addMarker() = function () {
+    //  id: 0,
+    //    coords
+    //  :
+    //  {
+    //    latitude: $scope.la
+    //    longitude: $scope.lo
+    //  }
+    //  ,
+    //  options: {
+    //    draggable: true
+    //  }
+    //  ,
+    //  events: {
+    //    dragend: function (marker, eventName, args) {
+    //      $log.log('marker dragend');
+    //      var lat = marker.getPosition().lat();
+    //      var lon = marker.getPosition().lng();
+    //      $log.log(lat);
+    //      $log.log(lon);
     //
-    //        $scope.marker.options = {
-    //          draggable: true,
-    //          labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
-    //          labelAnchor: "100 0",
-    //          labelClass: "marker-labels"
-    //        };
-    //      }
+    //      $scope.marker.options = {
+    //        draggable: true,
+    //        labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+    //        labelAnchor: "100 0",
+    //        labelClass: "marker-labels"
+    //      };
     //    }
+    //  }
     //
     //}
+  })
 
 
 
