@@ -90,4 +90,4 @@ module.exports = function(app, passport, jwt) {
 
                 res.send(user);
             });
-        };
+        });
