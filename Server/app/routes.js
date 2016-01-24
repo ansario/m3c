@@ -63,18 +63,25 @@ app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
 
         app.get('/getall', function(req, res) {
 
-              DVI.find({}, function(err, users) {
-                var dviMap = {};
+          DVI.find({}, function(err, users) {
+            var dviMap = {};
 
-                users.forEach(function(dvi) {
-                  dviMap[dvi._id] = dvi;
-                });
-
-                res.send(dviMap);  
+            users.forEach(function(dvi) {
+              dviMap[dvi._id] = dvi;
             });
 
-  
-      
-  
+            res.send(dviMap);  
+        });
+  });
 
-};
+       app.get('/api/users', function(req, res) {
+          
+          var user_id = req.param('id');
+  
+          // res.send(user_id + ' ' + token + ' ' + geo);
+
+          DVI.find({'pr_id': user_id}, function(err, user) {
+
+            res.send(user);  
+        });
+  });

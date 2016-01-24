@@ -142,7 +142,7 @@ angular.module('starter.controllers', [])
 
 
     $http({
-        url: 'http://45.79.159.147:3000/create',
+        url: 'http://45.79.159.147:3000/findone',
         method: 'POST',
         data: jsonObj,
         //data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
