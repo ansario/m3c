@@ -241,7 +241,7 @@ angular.module('starter.controllers', [])
     jsonObj['possible_identity'] = $scope.identityField.value;
     jsonObj['status'] = $scope.statusField.value;
 
-    
+
 
     // get all physical description data points
     jsonObj['physical_description'] = $scope.descriptionFields.reduce(function(m, v) {
@@ -261,8 +261,8 @@ angular.module('starter.controllers', [])
 
 
   $scope.qrid = QRID.getID();
-  $scope.pictures = [];
-  
+  $scope.pictures = {};
+
   $scope.takePicture = function(event) {
         var options = {
             quality : 75,
@@ -278,10 +278,8 @@ angular.module('starter.controllers', [])
 
         $cordovaCamera.getPicture(options).then(function(imageData) {
             $scope.imgURI = "data:image/jpeg;base64," + imageData;
-            var jsonVariable = {};
             var value = event.target.id;
-            jsonVariable[value] = $scope.imgURI;
-            $scope.pictures.push(jsonVariable);
+            $scope.pictures[value] = $scope.imgURI;
 
         }, function(err) {
             // An error occured. Show a message to the user
@@ -317,11 +315,8 @@ angular.module('starter.controllers', [])
 
     $scope.save = function() {
       var jsonObj = getAllDataAsJson();
-      console.log($scope.pictures);
-      // $scope.pictures.forEach(function (arrayItem)
-      // {
-      //     jsonObj[arrayItem[]];
-      // });
+      //console.log($scope.pictures);
+
       $http ({
           url: 'http://ansario.com:3000/create',
           method: 'POST',
