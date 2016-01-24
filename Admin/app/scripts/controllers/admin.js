@@ -9,29 +9,19 @@
  */
 angular.module('adminApp')
     .controller('AdminCtrl', function($scope, $window, $http) {
-    $scope.data = {};
+      $scope.data = {};
+      $scope.loading = true;
 
+      $scope.truncationLimit = 20;
+      $scope.longString = "THIS IS A LONG STRING HAH Ha ha okay some more words please thank you bye"
 
-    $scope.login = function() {
-    var emailaddress = $scope.data.emailaddress;
-    var password = $scope.data.password;
-
-
-    $http ({
-        url: 'http://ansario.com:3000/login',
-        method: 'POST',
-        data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
+      $http({
+        url: 'http://45.79.159.147:3000/getall',
+        method: 'GET'
       }).then(function(data) {
+        $scope.allBodies = data;
+        $scope.loading = false;
+      });
 
-        if (data.data.token) {
-          sessionStorage.setItem("token",data.data.token);
-          $window.location.href = '/#/admin';
-        } else {
-          $window.location.href = '/#/login';
-        }
-      })
-   }
-})
+
+});

@@ -1,6 +1,9 @@
 <div class="container">
   <h2>Current Disaster Information</h2>
 
+  <div ng-show="loading">LOADING...</div>
+  <div ng-show="!loading">{{allBodies}}</div>
+
   <table class="table table-condensed">
     <thead>
       <tr>
@@ -19,7 +22,7 @@
         <td>James Wilson</td>
         <td>Field</td>
         <td>32.4, 42.3</td>
-        <td>User was found with a ...</td>
+        <td>{{longString | characters:truncationLimit}}</td>
         <td>Two shells were collected...</td>
         <td>3 Pictures</td>
       </tr>

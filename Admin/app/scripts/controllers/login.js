@@ -18,7 +18,7 @@ angular.module('adminApp')
 
 
     $http ({
-        url: 'http://ansario.com:3000/login',
+        url: 'http://45.79.159.147:3000/login',
         method: 'POST',
         data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
         headers: {
