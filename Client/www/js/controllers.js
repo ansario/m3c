@@ -219,14 +219,11 @@ angular.module('starter.controllers', [])
        var lat = position.coords.latitude;
        var long = position.coords.longitude;
 
-       var latString = lat.toString();
-       var longString = long.toString();
-       $scope.geoString  = "(" + latString + "," + longString + ")";
+       $scope.latString = lat.toString();
+       $scope.longString = long.toString();
+       $scope.geoString  = "(" + $scope.latString + "," + $scope.longString + ")";
 
-
-       console.log($scope.lat);
-       console.log($scope.long);
-       console.log($scope.geoString);
+       //console.log($scope.geoString);
      }, function(err) {
 
        //An error occurred. Show message to the user
@@ -238,9 +235,13 @@ angular.module('starter.controllers', [])
     var jsonObj = {};
 
     // get id/status/location data
+    jsonObj['qr_id'] = $scope.qrid;
     jsonObj['possible_identity'] = $scope.identityField.value;
     jsonObj['status'] = $scope.statusField.value;
-
+    jsonObj['geotag'] = {
+      'latitude': $scope.latString,
+      'longitude': $scope.longString
+    };
 
 
     // get all physical description data points
@@ -254,6 +255,10 @@ angular.module('starter.controllers', [])
       m[v.key] = v.value;
       return m;
     }, {});
+
+    // get picture data
+    jsonObj['recorded_information'] = $scope.pictures;
+
     //console.log(jsonObj);
     return jsonObj;
   };
@@ -315,7 +320,7 @@ angular.module('starter.controllers', [])
 
     $scope.save = function() {
       var jsonObj = getAllDataAsJson();
-      //console.log($scope.pictures);
+      console.log(jsonObj);
 
       $http ({
           url: 'http://ansario.com:3000/create',

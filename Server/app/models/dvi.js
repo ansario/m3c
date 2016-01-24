@@ -5,7 +5,10 @@ var dviSchema = mongoose.Schema({
     qr_id: String,
     possible_identity: String,
     status: String,
-    geotag: String,
+    geotag: {
+        latitude: String,
+        longitude: String
+    },
     physical_description: {
       body_condition:String,
       general_condition:String,
