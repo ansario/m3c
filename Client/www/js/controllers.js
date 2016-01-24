@@ -42,7 +42,7 @@ angular.module('starter.controllers', [])
 
     // return $state.go('tab.dash');
     $http ({
-        url: 'http://ansario.com:3000/signup',
+        url: 'http://45.79.159.147:3000/signup',
         method: 'POST',
         data: "&email="+encodeURIComponent(emailaddress) +"&password="+encodeURIComponent(password),
         headers: {
@@ -72,7 +72,7 @@ angular.module('starter.controllers', [])
     emailaddress = emailaddress.toLowerCase();
 
     $http ({
-        url: 'http://ansario.com:3000/login',
+        url: 'http://45.79.159.147:3000/login',
         method: 'POST',
         data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
         headers: {
@@ -348,7 +348,7 @@ angular.module('starter.controllers', [])
       
 
       $http({
-        url: 'http://ansario.com:3000/create',
+        url: 'http://45.79.159.147:3000/create',
         method: 'POST',
         data: jsonObj,
         //data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
