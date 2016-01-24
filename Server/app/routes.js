@@ -1,4 +1,4 @@
-var DVI = require(./models/dvi);
+var DVI = require("./models/dvi");
 
 module.exports = function(app, passport, jwt) {
 
