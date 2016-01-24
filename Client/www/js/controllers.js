@@ -3,15 +3,12 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope, $state) {
 
     $scope.create = function() {
-        $state.go('qr-create');
+        $state.go('qr');
     }
 
-    $scope.update = function() {
-        $state.go('qr-update');
-    }
 })
 
-.controller('CreateQRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
+.controller('QRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
 
     document.addEventListener("deviceready", function() {
 
@@ -28,22 +25,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('UpdateQRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
 
-    document.addEventListener("deviceready", function() {
-
-        $cordovaBarcodeScanner
-            .scan()
-            .then(function(barcodeData) {
-                QRID.setID(barcodeData.text);
-                $state.go('update');
-            }, function(error) {
-                // An error occurred
-            });
-
-    }, false);
-
-})
 
 .controller('RegisterCtrl', function($scope, $http, $state) {
 
@@ -138,34 +120,34 @@ angular.module('starter.controllers', [])
 //
 //})
 
-.controller('UpdateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, QRID, $http) {
-
-
-    $http({
-        url: 'http://45.79.159.147:3000/users?id=' + "Hello World",
-        method: 'GET',
-
-        //data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
-    }).then(function(data) {
-
-
-        $scope.user = data.user;
-
-        console.log(data);
-        // if (data.data.token) {
-        //   sessionStorage.setItem("token",data.data.token);
-        return $state.go('tab.dash');
-        // } else {
-        //   return $state.go('login');
-        // }
-    })
-})
 
 
 .controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
+    
+
+
+    $scope.init = function () {
+
+      $http({
+            url: 'http://45.79.159.147:3000/users?id='+QRID.getID,
+            method: 'GET',
+      }).then(function(data) {
+
+
+        $scope.user = data;
+
+        if ($scope.user) {
+
+          console.log("YUAS!");
+        }
+        
+      })
+    }
+      
+    
+    
+    $scope.init();
+        
 
     $scope.descriptionFields = [{
         'key': 'body_condition',
