@@ -74,7 +74,7 @@ app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
         });
   });
 
-       app.get('/api/users', function(req, res) {
+       app.get('/users', function(req, res) {
           
           var user_id = req.param('id');
   
