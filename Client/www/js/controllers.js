@@ -2,30 +2,52 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope, $state) {
 
-  $scope.create = function() {
-    $state.go('qr');
-  }
+    $scope.create = function() {
+        $state.go('qr-create');
+    }
+
+    $scope.update = function() {
+        $state.go('qr-update');
+    }
 })
 
-.controller('QRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
+.controller('CreateQRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
 
-  document.addEventListener("deviceready", function () {
+    document.addEventListener("deviceready", function() {
 
-  $cordovaBarcodeScanner
-    .scan()
-    .then(function(barcodeData) {
-      QRID.setID(barcodeData.text);
-      $state.go('create');
-    }, function(error) {
-      // An error occurred
-    });
+        $cordovaBarcodeScanner
+            .scan()
+            .then(function(barcodeData) {
+                QRID.setID(barcodeData.text);
+                $state.go('create');
+            }, function(error) {
+                // An error occurred
+            });
 
-}, false);
+    }, false);
 
 
   $scope.goBack = function (){
     $state.go('tab.dash')
   }
+})
+
+
+.controller('UpdateQRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
+
+    document.addEventListener("deviceready", function() {
+
+        $cordovaBarcodeScanner
+            .scan()
+            .then(function(barcodeData) {
+                QRID.setID(barcodeData.text);
+                $state.go('update');
+            }, function(error) {
+                // An error occurred
+            });
+
+    }, false);
+
 })
 
 .controller('RegisterCtrl', function($scope, $http, $state) {
@@ -34,34 +56,34 @@ angular.module('starter.controllers', [])
     $scope.data = {};
 
     $scope.register = function() {
-    // username = $scope.data.username,
-    // pw = $scope.data.password
+        // username = $scope.data.username,
+        // pw = $scope.data.password
 
-    var emailaddress = $scope.data.emailaddress;
-    var password = $scope.data.password;
-    var confirmpassword = $scope.data.confirmpassword;
+        var emailaddress = $scope.data.emailaddress;
+        var password = $scope.data.password;
+        var confirmpassword = $scope.data.confirmpassword;
 
-    console.log(emailaddress);
-    console.log(password);
+        console.log(emailaddress);
+        console.log(password);
 
-    // return $state.go('tab.dash');
-    $http ({
-        url: 'http://ansario.com:3000/signup',
-        method: 'POST',
-        data: "&email="+encodeURIComponent(emailaddress) +"&password="+encodeURIComponent(password),
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      }).then(function(data) {
+        // return $state.go('tab.dash');
+        $http({
+            url: 'http://45.79.159.147:3000/signup',
+            method: 'POST',
+            data: "&email=" + encodeURIComponent(emailaddress) + "&password=" + encodeURIComponent(password),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(function(data) {
 
-        // if (data.data.token) {
-          // sessionStorage.setItem("token",data.data.token);
-          // return $state.go('tab.dash');
-          return $state.go('login');
-        // } else {
-        // }
-      })
-   }
+            // if (data.data.token) {
+            // sessionStorage.setItem("token",data.data.token);
+            // return $state.go('tab.dash');
+            return $state.go('login');
+            // } else {
+            // }
+        })
+    }
 
   $scope.goBack = function () {
     $state.go('login');
@@ -75,41 +97,41 @@ angular.module('starter.controllers', [])
 
 
     $scope.login = function() {
-    emailaddress = $scope.data.emailaddress;
-    password = $scope.data.password;
+        emailaddress = $scope.data.emailaddress;
+        password = $scope.data.password;
+        emailaddress = emailaddress.toLowerCase();
 
+        $http({
+            url: 'http://45.79.159.147:3000/login',
+            method: 'POST',
+            data: "email=" + encodeURIComponent(emailaddress) + "&password=" + encodeURIComponent(password),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(function(data) {
 
-    $http ({
-        url: 'http://ansario.com:3000/login',
-        method: 'POST',
-        data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      }).then(function(data) {
-
-        if (data.data.token) {
-          sessionStorage.setItem("token",data.data.token);
-          return $state.go('tab.dash');
-        } else {
-          return $state.go('login');
-        }
-      })
-   }
+            if (data.data.token) {
+                sessionStorage.setItem("token", data.data.token);
+                return $state.go('tab.dash');
+            } else {
+                return $state.go('login');
+            }
+        })
+    }
 })
 
 
 .controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+    $scope.settings = {
+        enableFriends: true
+    };
 })
 
 
 
 
 
-  .controller('MapCtrl', function($scope, $state) {
+.controller('MapCtrl', function($scope, $cordovaGeolocation,$state) {
 
 
     $scope.la = sessionStorage.getItem("lat");
@@ -120,14 +142,44 @@ angular.module('starter.controllers', [])
     }
 
 
-  })
+})
 
 
 
-  .controller('CreateCtrl', function ($scope, $state, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
+//.controller('MapCtrl', function($scope, $ionicLoading, $compile) {
+//
+//})
 
-    $scope.descriptionFields = [
-      {
+.controller('UpdateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, QRID, $http) {
+
+
+    $http({
+        url: 'http://45.79.159.147:3000/users?id=' + "Hello World",
+        method: 'GET',
+
+        //data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
+    }).then(function(data) {
+
+
+        $scope.user = data.user;
+
+        console.log(data);
+        // if (data.data.token) {
+        //   sessionStorage.setItem("token",data.data.token);
+        return $state.go('tab.dash');
+        // } else {
+        //   return $state.go('login');
+        // }
+    })
+})
+
+
+.controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal, $state) {
+
+    $scope.descriptionFields = [{
         'key': 'body_condition',
         'name': 'Body Condition',
         'value': 'Unknown',
@@ -294,52 +346,28 @@ angular.module('starter.controllers', [])
         // An error occured. Show a message to the user
       });
     };
-    $ionicModal.fromTemplateUrl('my-modal.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function (modal) {
-      $scope.modal = modal;
-    });
-    $scope.openModal = function () {
-      $scope.modal.show();
-    };
-    $scope.closeModal = function () {
-      $scope.modal.hide();
-    };
-    //Cleanup the modal when we're done with it!
-    $scope.$on('$destroy', function () {
-      $scope.modal.remove();
-    });
-    // Execute action on hide modal
-    $scope.$on('modal.hidden', function () {
-      // Execute action
-    });
-    // Execute action on remove modal
-    $scope.$on('modal.removed', function () {
-      // Execute action
-    });
 
     $scope.save = function () {
       var jsonObj = getAllDataAsJson();
       console.log(jsonObj);
 
-      $http({
-        url: 'http://ansario.com:3000/create',
-        method: 'POST',
-        data: jsonObj,
-        //data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then(function (data) {
+        $http({
+            url: 'http://45.79.159.147:3000/create',
+            method: 'POST',
+            data: jsonObj,
+            //data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then(function(data) {
 
-        // if (data.data.token) {
-        //   sessionStorage.setItem("token",data.data.token);
-        //   return $state.go('tab.dash');
-        // } else {
-        //   return $state.go('login');
-        // }
-      })
+            // if (data.data.token) {
+            //   sessionStorage.setItem("token",data.data.token);
+            return $state.go('tab.dash');
+            // } else {
+            //   return $state.go('login');
+            // }
+        })
     };
 
     $scope.goBack = function () {
@@ -356,7 +384,6 @@ angular.module('starter.controllers', [])
 
       console.log($scope.geoString);
     };
-
 
 
   });

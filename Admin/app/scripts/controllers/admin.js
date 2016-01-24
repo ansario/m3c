@@ -8,7 +8,7 @@
  * Controller of the adminApp
  */
 angular.module('adminApp')
-    .controller('LoginCtrl', function($scope, $window, $http) {
+    .controller('AdminCtrl', function($scope, $window, $http) {
     $scope.data = {};
 
 

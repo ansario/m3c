@@ -17,6 +17,9 @@ app.use(bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(session({secret: 'M3C'}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 app.use(flash());
 
 // Add headers
