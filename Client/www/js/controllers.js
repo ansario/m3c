@@ -138,7 +138,37 @@ angular.module('starter.controllers', [])
 
         if ($scope.user) {
 
-          console.log("YUAS!");
+          // get id/status/location data
+        $scope.qrid = $scope.user.qr_id;
+        $scope.identityField.value = $scope.user.possible_identity;
+        $scope.statusField.value = $scope.user.status;
+        $scope.latString = $scope.user.geotag.latitude;
+        $scope.longString = $scope.user.geotag.longitude;
+
+        //  // get all physical description data points
+        // $scope.user.physical_description = $scope.descriptionFields.reduce(function(m, v) {
+        //     m[v.key] = v.value;
+        //     return m;
+        // }, {});
+
+        // // get all associated evidence fields
+        // jsonObj['associated_evidence'] = $scope.evidenceFields.reduce(function(m, v) {
+        //     m[v.key] = v.value;
+        //     return m;
+        // }, {});
+
+        // // get picture data
+        // jsonObj['recorded_information'] = $scope.pictures;
+       
+
+
+
+
+
+
+
+
+            
         }
         
       })
