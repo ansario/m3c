@@ -169,7 +169,7 @@ angular.module('starter.controllers', [])
 
 
 
-.controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
+.controller('CreateCtrl', function($scope, $state, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
 
     $scope.descriptionFields = [{
         'key': 'body_condition',
@@ -281,40 +281,40 @@ angular.module('starter.controllers', [])
     ];
 
     var getAllDataAsJson = function() {
-        var jsonObj = {};
+      var jsonObj = {};
 
-        // get id/status/location data
-        jsonObj['qr_id'] = $scope.qrid;
-        jsonObj['possible_identity'] = $scope.identityField.value;
-        jsonObj['status'] = $scope.statusField.value;
-        jsonObj['geotag'] = {
-            'latitude': $scope.latString,
-            'longitude': $scope.longString
-        };
+      // get id/status/location data
+      jsonObj['qr_id'] = $scope.qrid;
+      jsonObj['possible_identity'] = $scope.identityField.value;
+      jsonObj['status'] = $scope.statusField.value;
+      jsonObj['geotag'] = {
+        'latitude': $scope.latString,
+        'longitude': $scope.longString
+      };
 
 
-        // get all physical description data points
-        jsonObj['physical_description'] = $scope.descriptionFields.reduce(function(m, v) {
-            m[v.key] = v.value;
-            return m;
-        }, {});
+      // get all physical description data points
+      jsonObj['physical_description'] = $scope.descriptionFields.reduce(function (m, v) {
+        m[v.key] = v.value;
+        return m;
+      }, {});
 
-        // get all associated evidence fields
-        jsonObj['associated_evidence'] = $scope.evidenceFields.reduce(function(m, v) {
-            m[v.key] = v.value;
-            return m;
-        }, {});
+      // get all associated evidence fields
+      jsonObj['associated_evidence'] = $scope.evidenceFields.reduce(function (m, v) {
+        m[v.key] = v.value;
+        return m;
+      }, {});
 
-        // get picture data
-        jsonObj['recorded_information'] = $scope.pictures;
+      // get picture data
+      jsonObj['recorded_information'] = $scope.pictures;
 
-        //console.log(jsonObj);
-        return jsonObj;
+      //console.log(jsonObj);
+      return jsonObj;
     };
-
 
     $scope.qrid = QRID.getID();
     $scope.pictures = {};
+
 
     $scope.takePicture = function(event) {
         var options = {
@@ -363,7 +363,7 @@ angular.module('starter.controllers', [])
     };
 
     $scope.goBack = function () {
-      $state.go('qr-create');
+      $state.go('qr');
     }
 
 

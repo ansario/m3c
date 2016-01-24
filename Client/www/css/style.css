@@ -11,7 +11,7 @@
 }
 
 
-#tabButton1, #tabButton2, #tabButton3 {
+#tabButton1, #tabButton2 {
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
