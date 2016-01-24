@@ -8,126 +8,159 @@
     </div>
     <br>
     <br> -->
-        <H4>Identification: {{qrid}}</H4>
-        <div class="list">
-            <div class="item item-divider">
-                Identity/Status/Location
+    <H4>Identification: {{qrid}}</H4>
+    <div class="list">
+      <div class="item item-divider">
+    Identity/Status/Location
+  </div>
+    <label class="item item-input item-stacked-label">
+      <span class="input-label">{{identityField.name}}</span>
+      <input type="text" placeholder="{{identityField.placeholder}}" ng-model="identityField.value">
+    </label>
+    <label class="item item-input item-select">
+      <span class="input-label">{{statusField.name}}</span>
+      <select ng-model="statusField.value">
+        <option value="Unknown">Unknown</option>
+        <option ng-repeat="option in statusField.options" value="{{option}}">{{option}}</option>
+      </select>
+    </label>
+    <label class="item item-input">
+      <span class="input-label">Geotag</span>
+      <button class="button button-positive button-clear pull-right" ng-click="getLoc()">
+        Get Geotag
+      </button>
+      <input type="text" value="{{geoString}}">
+
+    </label>
+  <div class="item item-divider">
+    Description
+  </div>
+  <label ng-repeat="field in descriptionFields" class="item item-input item-select">
+    <span class="input-label">{{field.name}}</span>
+    <select ng-model="field.value">
+      <option value="Unknown">Unknown</option>
+      <option ng-repeat="option in field.options" value="{{option}}">{{option}}</option>
+    </select>
+  </label>
+  <div class="item item-divider">
+  Associated Evidence
+</div>
+<label class="item item-input item-stacked-label" ng-repeat="field in evidenceFields">
+  <span class="input-label">{{field.name}}</span>
+  <input type="text" placeholder="{{field.placeholder}}" ng-model="field.value">
+</label>
+<div class="item item-divider">
+Photographs
+</div>
+
+<label class="item item-input">
+  <span class="input-label">Full Length</span>
+  <img ng-show="pictures[0]['full-body'] !== undefined" ng-src="{{pictures[0]['full-body']}}" height="30px" width="30px">
+  <div class="item-button-right">
+                <div class="buttons">
+                  <button class="button pull-right" id="full-body" data-ng-click="takePicture($event)">
+                    <i class="icon ion-camera"></i>
+                  </button>
+                </div>
             </div>
-            <label class="item item-input item-stacked-label">
-                <span class="input-label">{{identityField.name}}</span>
-                <input type="text" placeholder="{{identityField.placeholder}}" ng-model="identityField.value">
-            </label>
-            <label class="item item-input item-select">
-                <span class="input-label">{{statusField.name}}</span>
-                <select ng-model="statusField.value">
-                    <option value="Unknown">Unknown</option>
-                    <option ng-repeat="option in statusField.options" value="{{option}}">{{option}}</option>
-                </select>
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Geotag</span>
-                <button class="button button-positive button-clear pull-right" ng-click="getLoc()" readonly>
-                    Get Geotag
-                </button>
-                <input type="text" value="{{geoString}}">
-            </label>
-            <div class="item item-divider">
-                Description
+</label>
+<label class="item item-input">
+  <span class="input-label">Upper Half</span>
+  <img ng-show="pictures[1]['upper-half'] !== undefined" ng-src="{{pictures[1]['upper-half']}}" height="30px" width="30px">
+  <div class="item-button-right">
+                <div class="buttons">
+                  <button class="button" id="upper-half" data-ng-click="takePicture($event)" >  <i class="icon ion-camera"></i>               </button>
+
+                </div>
             </div>
-            <label ng-repeat="field in descriptionFields" class="item item-input item-select">
-                <span class="input-label">{{field.name}}</span>
-                <select ng-model="field.value">
-                    <option value="Unknown">Unknown</option>
-                    <option ng-repeat="option in field.options" value="{{option}}">{{option}}</option>
-                </select>
-            </label>
-            <div class="item item-divider">
-                Associated Evidence
+
+
+
+</label>
+<label class="item item-input">
+  <span class="input-label">Lower Half</span>
+  <img ng-show="pictures[2]['lower-half'] !== undefined" ng-src="{{pictures[2]['lower-half']}}" height="30px" width="30px">
+  <div class="item-button-right">
+                <div class="buttons">
+                    <button class="button" id="lower-half" data-ng-click="takePicture($event)" > <i class="icon ion-camera"></i>
+                    </button>
+
+                </div>
             </div>
-            <label class="item item-input item-stacked-label" ng-repeat="field in evidenceFields">
-                <span class="input-label">{{field.name}}</span>
-                <input type="text" placeholder="{{field.placeholder}}" ng-model="field.value">
-            </label>
-            <div class="item item-divider">
-                Photographs
+
+
+
+</label>
+<label class="item item-input">
+  <span class="input-label">Front View of Head</span>
+  <img ng-show="pictures[3]['fvoh'] !== undefined" ng-src="{{pictures[3]['fvoh']}}" height="30px" width="30px">
+  <div class="item-button-right">
+                <div class="buttons">
+                    <button class="button" id="fvoh" data-ng-click="takePicture($event)" >
+                        <i class="icon ion-camera"></i>
+                    </button>
+
+                </div>
             </div>
-            <label class="item item-input">
-                <span class="input-label">Full Length</span>
-                <img ng-show="pictures[0]['full-body'] !== undefined" ng-src="{{pictures[0]['full-body']}}" height="30px" width="30px">
-                <div class="item-button-right">
-                    <div class="buttons">
-                        <button class="button pull-right" id="full-body" data-ng-click="takePicture($event)">
-                            <i class="icon ion-camera"></i>
-                        </button>
-                    </div>
+
+
+</label>
+<label class="item item-input">
+  <span class="input-label">Elevated View</span>
+  <img ng-show="pictures[4]['elevated-view'] !== undefined" ng-src="{{pictures[4]['elevated-view']}}" height="30px" width="30px">
+  <div class="item-button-right">
+                <div class="buttons">
+                    <button class="button" id="elevated-view" data-ng-click="takePicture($event)" >
+                        <i class="icon ion-camera"></i>
+                    </button>
+
                 </div>
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Upper Half</span>
-                <img ng-show="pictures[1]['upper-half'] !== undefined" ng-src="{{pictures[1]['upper-half']}}" height="30px" width="30px">
-                <div class="item-button-right">
-                    <div class="buttons">
-                        <button class="button" id="upper-half" data-ng-click="takePicture($event)"> <i class="icon ion-camera"></i> </button>
-                    </div>
+            </div>
+
+
+</label>
+<label class="item item-input">
+  <span class="input-label">Unique Features</span>
+  <img ng-show="pictures[5]['unique-features'] !== undefined" ng-src="{{pictures[5]['unique-features']}}" height="30px" width="30px">
+  <div class="item-button-right">
+                <div class="buttons">
+                    <button class="button" id="unique-features" data-ng-click="takePicture($event)" >
+                        <i class="icon ion-camera"></i>
+                    </button>
+
                 </div>
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Lower Half</span>
-                <img ng-show="pictures[2]['lower-half'] !== undefined" ng-src="{{pictures[2]['lower-half']}}" height="30px" width="30px">
-                <div class="item-button-right">
-                    <div class="buttons">
-                        <button class="button" id="lower-half" data-ng-click="takePicture($event)"> <i class="icon ion-camera"></i>
-                        </button>
-                    </div>
+            </div>
+</label>
+<label class="item item-input">
+  <span class="input-label">Personal Affects</span>
+  <img ng-show="pictures[6]['personal-affects'] !== undefined" ng-src="{{pictures[5]['personal-affects']}}" height="30px" width="30px">
+  <!-- <img ng-show="imgURI === undefined" ng-src="http://placehold.it/30x30"> -->
+  <div class="item-button-right">
+                <div class="buttons">
+                  <button class="button" id="personal-affects" data-ng-click="takePicture($event)">
+                        <i class="icon ion-camera"></i>
+                    </button>
+
                 </div>
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Front View of Head</span>
-                <img ng-show="pictures[3]['fvoh'] !== undefined" ng-src="{{pictures[3]['fvoh']}}" height="30px" width="30px">
-                <div class="item-button-right">
-                    <div class="buttons">
-                        <button class="button" id="fvoh" data-ng-click="takePicture($event)">
-                            <i class="icon ion-camera"></i>
-                        </button>
-                    </div>
-                </div>
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Elevated View</span>
-                <img ng-show="pictures[4]['elevated-view'] !== undefined" ng-src="{{pictures[4]['elevated-view']}}" height="30px" width="30px">
-                <div class="item-button-right">
-                    <div class="buttons">
-                        <button class="button" id="elevated-view" data-ng-click="takePicture($event)">
-                            <i class="icon ion-camera"></i>
-                        </button>
-                    </div>
-                </div>
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Unique Features</span>
-                <img ng-show="pictures[5]['unique-features'] !== undefined" ng-src="{{pictures[5]['unique-features']}}" height="30px" width="30px">
-                <div class="item-button-right">
-                    <div class="buttons">
-                        <button class="button" id="unique-features" data-ng-click="takePicture($event)">
-                            <i class="icon ion-camera"></i>
-                        </button>
-                    </div>
-                </div>
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Personal Affects</span>
-                <img ng-show="pictures[6]['personal-affects'] !== undefined" ng-src="{{pictures[6]['personal-affects']}}" height="30px" width="30px">
-                <!-- <img ng-show="imgURI === undefined" ng-src="http://placehold.it/30x30"> -->
-                <div class="item-button-right">
-                    <div class="buttons">
-                        <button class="button" id="personal-affects" data-ng-click="takePicture($event)">
-                            <i class="icon ion-camera"></i>
-                        </button>
-                    </div>
-                </div>
-            </label>
-        </div>
-        </div>
-        <button class="button button-assertive button-block" ng-click="save()">Save</button>
-    </ion-content>
+            </div>
+
+
+
+
+</label>
+
+
+
+  </div>
+
+  </div>
+
+<button class="button button-assertive button-block" ng-click="save()">Save</button>
+
+
+
+
+
+
+  </ion-content>
 </ion-view>

@@ -9,18 +9,16 @@ angular.module('starter.controllers', [])
 
 .controller('QRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
 
-  document.addEventListener("deviceready", function () {
-
-  $cordovaBarcodeScanner
-    .scan()
-    .then(function(barcodeData) {
-      QRID.setID(barcodeData.text);
-      $state.go('create');
-    }, function(error) {
-      // An error occurred
-    });
-
-}, false);
+  document.addEventListener("deviceready", function() {
+    $cordovaBarcodeScanner
+      .scan()
+      .then(function (barcodeData) {
+        QRID.setID(barcodeData.text);
+        $state.go('create');
+      }, function (error) {
+        // An error occurred
+      });
+  }, false);
 
 })
 
@@ -90,30 +88,65 @@ angular.module('starter.controllers', [])
    }
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
   };
 })
+
+
+
+
+
+  .controller('MapCtrl', function($scope, $cordovaGeolocation) {
+
+
+    $scope.la = sessionStorage.getItem("lat");
+    $scope.lo = sessionStorage.getItem("long");
+
+
+    //$scope.addMarker() = function () {
+    //  id: 0,
+    //    coords
+    //  :
+    //  {
+    //    latitude: $scope.la
+    //    longitude: $scope.lo
+    //  }
+    //  ,
+    //  options: {
+    //    draggable: true
+    //  }
+    //  ,
+    //  events: {
+    //    dragend: function (marker, eventName, args) {
+    //      $log.log('marker dragend');
+    //      var lat = marker.getPosition().lat();
+    //      var lon = marker.getPosition().lng();
+    //      $log.log(lat);
+    //      $log.log(lon);
+    //
+    //      $scope.marker.options = {
+    //        draggable: true,
+    //        labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+    //        labelAnchor: "100 0",
+    //        labelClass: "marker-labels"
+    //      };
+    //    }
+    //  }
+    //
+    //}
+  })
+
+
+
+  //.controller('MapCtrl', function($scope, $ionicLoading, $compile) {
+  //
+  //})
+
+
+.controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, QRID, $ionicModal) {
 
 .controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
 
@@ -241,8 +274,6 @@ angular.module('starter.controllers', [])
     jsonObj['possible_identity'] = $scope.identityField.value;
     jsonObj['status'] = $scope.statusField.value;
 
-    
-
     // get all physical description data points
     jsonObj['physical_description'] = $scope.descriptionFields.reduce(function(m, v) {
       m[v.key] = v.value;
@@ -262,7 +293,7 @@ angular.module('starter.controllers', [])
 
   $scope.qrid = QRID.getID();
   $scope.pictures = [];
-  
+
   $scope.takePicture = function(event) {
         var options = {
             quality : 75,
@@ -287,9 +318,6 @@ angular.module('starter.controllers', [])
             // An error occured. Show a message to the user
         });
     }
-
-
-
     $ionicModal.fromTemplateUrl('my-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -340,4 +368,23 @@ angular.module('starter.controllers', [])
           // }
         })
     }
+
+
+
+  $scope.getLoc = function() {
+
+       var latString = sessionStorage.getItem("lat").toString();
+       var longString = sessionStorage.getItem("long").toString();
+       $scope.geoString  = "(" + latString + "," + longString + ")";
+
+
+       console.log($scope.geoString);
+     }, function(err) {
+
+       //An error occurred. Show message to the user
+     }
+
+
+
+
 });
