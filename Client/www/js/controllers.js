@@ -32,7 +32,6 @@ angular.module('starter.controllers', [])
   }
 })
 
-
 .controller('UpdateQRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
 
     document.addEventListener("deviceready", function() {
@@ -166,45 +165,11 @@ angular.module('starter.controllers', [])
 
 
 
-//.controller('MapCtrl', function($scope, $ionicLoading, $compile) {
-//
-//})
-
-.controller('UpdateCtrl', function($scope, $state, $cordovaCamera, $cordovaGeolocation, QRID, $http) {
-
-
-    $http({
-        url: 'http://45.79.159.147:3000/users?id=' + "Hello World",
-        method: 'GET',
-
-        //data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
-    }).then(function(data) {
-
-
-        $scope.user = data.user;
-
-        console.log(data);
-        // if (data.data.token) {
-        //   sessionStorage.setItem("token",data.data.token);
-        return $state.go('tab.dash');
-        // } else {
-        //   return $state.go('login');
-        // }
-    })
-
-     $scope.goBack = function () {
-         $state.go('qr-update');
-  }
 
 
 
-})
 
-
-.controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal, $state) {
+.controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
 
     $scope.descriptionFields = [{
         'key': 'body_condition',
@@ -275,16 +240,16 @@ angular.module('starter.controllers', [])
     ];
 
     $scope.identityField = {
-      'key': 'possible_identity',
-      'name': 'Possible Identity',
-      'placeholder': 'John'
+        'key': 'possible_identity',
+        'name': 'Possible Identity',
+        'placeholder': 'John'
     };
 
     $scope.statusField = {
-      'key': 'status',
-      'name': 'Status',
-      'value': 'Unknown',
-      'options': ['Field', 'Transit', 'Storage', 'Internment', 'Released']
+        'key': 'status',
+        'name': 'Status',
+        'value': 'Unknown',
+        'options': ['Field', 'Transit', 'Storage', 'Internment', 'Released']
     };
 
     $scope.evidenceFields = [
@@ -315,63 +280,63 @@ angular.module('starter.controllers', [])
       }
     ];
 
-    var getAllDataAsJson = function () {
-      var jsonObj = {};
+    var getAllDataAsJson = function() {
+        var jsonObj = {};
 
-      // get id/status/location data
-      jsonObj['qr_id'] = $scope.qrid;
-      jsonObj['possible_identity'] = $scope.identityField.value;
-      jsonObj['status'] = $scope.statusField.value;
-      jsonObj['geotag'] = {
-        'latitude': $scope.latString,
-        'longitude': $scope.longString
-      };
+        // get id/status/location data
+        jsonObj['qr_id'] = $scope.qrid;
+        jsonObj['possible_identity'] = $scope.identityField.value;
+        jsonObj['status'] = $scope.statusField.value;
+        jsonObj['geotag'] = {
+            'latitude': $scope.latString,
+            'longitude': $scope.longString
+        };
 
 
-      // get all physical description data points
-      jsonObj['physical_description'] = $scope.descriptionFields.reduce(function (m, v) {
-        m[v.key] = v.value;
-        return m;
-      }, {});
+        // get all physical description data points
+        jsonObj['physical_description'] = $scope.descriptionFields.reduce(function(m, v) {
+            m[v.key] = v.value;
+            return m;
+        }, {});
 
-      // get all associated evidence fields
-      jsonObj['associated_evidence'] = $scope.evidenceFields.reduce(function (m, v) {
-        m[v.key] = v.value;
-        return m;
-      }, {});
+        // get all associated evidence fields
+        jsonObj['associated_evidence'] = $scope.evidenceFields.reduce(function(m, v) {
+            m[v.key] = v.value;
+            return m;
+        }, {});
 
-      // get picture data
-      jsonObj['recorded_information'] = $scope.pictures;
+        // get picture data
+        jsonObj['recorded_information'] = $scope.pictures;
 
-      //console.log(jsonObj);
-      return jsonObj;
+        //console.log(jsonObj);
+        return jsonObj;
     };
 
 
     $scope.qrid = QRID.getID();
     $scope.pictures = {};
 
-    $scope.takePicture = function (event) {
-      var options = {
-        quality: 75,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.CAMERA,
-        allowEdit: true,
-        encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 300,
-        targetHeight: 300,
-        popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: false
-      };
+    $scope.takePicture = function(event) {
+        var options = {
+            quality: 75,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 300,
+            targetHeight: 300,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
 
-      $cordovaCamera.getPicture(options).then(function (imageData) {
-        $scope.imgURI = "data:image/jpeg;base64," + imageData;
-        var value = event.target.id;
-        $scope.pictures[value] = $scope.imgURI;
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.imgURI = "data:image/jpeg;base64," + imageData;
+            var value = event.target.id;
+            $scope.pictures[value] = $scope.imgURI;
 
-      }, function (err) {
-        // An error occured. Show a message to the user
-      });
+        }, function(err) {
+            // An error occured. Show a message to the user
+        });
     };
 
     $scope.save = function () {
@@ -413,4 +378,4 @@ angular.module('starter.controllers', [])
     };
 
 
-  });
+});

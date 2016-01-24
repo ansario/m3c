@@ -87,29 +87,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     templateUrl: 'templates/Register.html'
   })
 
-  .state('qr-create', {
-    url: '/qr-create',
-    controller: 'CreateQRCtrl',
-    templateUrl: 'templates/qr-create.html'
+  .state('qr', {
+    url: '/qr',
+    controller: 'QRCtrl',
+    templateUrl: 'templates/qr.html'
   })
 
-  .state('qr-update', {
-    url: '/qr-update',
-    controller: 'UpdateQRCtrl',
-    templateUrl: 'templates/qr-update.html'
-  })
-
+  
   .state('create', {
     url: '/create',
     controller: 'CreateCtrl',
     templateUrl: 'templates/create.html'
   })
 
-  .state('update', {
-    url: '/update',
-    controller: 'CreateCtrl',
-    templateUrl: 'templates/update.html'
-  })
 
   .state('map', {
     url: '/map',
