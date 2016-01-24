@@ -57,6 +57,8 @@ app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
         newDVI.recorded_information.personal_effects_img = req.body.recorded_information.personal_effects_img;
 
         newDVI.save();
+        res.send(200);
+
   });
       
   
