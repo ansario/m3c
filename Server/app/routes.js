@@ -60,6 +60,20 @@ app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
         res.sendStatus(200);
 
   });
+
+        app.post('/get', function(req, res) {
+
+              DVI.find({}, function(err, users) {
+                var dviMap = {};
+
+                users.forEach(function(dvi) {
+                  dviMap[dvi._id] = dvi;
+                });
+
+                res.send(dviMap);  
+            });
+
+  
       
   
 

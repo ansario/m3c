@@ -3,11 +3,15 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope, $state) {
 
   $scope.create = function() {
-    $state.go('qr');
+    $state.go('qr-create');
+  }
+
+  $scope.update = function () {
+    $state.go('qr-update');
   }
 })
 
-.controller('QRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
+.controller('CreateQRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
 
   document.addEventListener("deviceready", function () {
 
@@ -16,6 +20,23 @@ angular.module('starter.controllers', [])
     .then(function(barcodeData) {
       QRID.setID(barcodeData.text);
       $state.go('create');
+    }, function(error) {
+      // An error occurred
+    });
+
+}, false);
+
+})
+
+.controller('UpdateQRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
+
+  document.addEventListener("deviceready", function () {
+
+  $cordovaBarcodeScanner
+    .scan()
+    .then(function(barcodeData) {
+      QRID.setID(barcodeData.text);
+      $state.go('update');
     }, function(error) {
       // An error occurred
     });
@@ -108,37 +129,7 @@ angular.module('starter.controllers', [])
     $scope.lo = sessionStorage.getItem("long");
 
 
-    //$scope.addMarker() = function () {
-    //  id: 0,
-    //    coords
-    //  :
-    //  {
-    //    latitude: $scope.la
-    //    longitude: $scope.lo
-    //  }
-    //  ,
-    //  options: {
-    //    draggable: true
-    //  }
-    //  ,
-    //  events: {
-    //    dragend: function (marker, eventName, args) {
-    //      $log.log('marker dragend');
-    //      var lat = marker.getPosition().lat();
-    //      var lon = marker.getPosition().lng();
-    //      $log.log(lat);
-    //      $log.log(lon);
-    //
-    //      $scope.marker.options = {
-    //        draggable: true,
-    //        labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
-    //        labelAnchor: "100 0",
-    //        labelClass: "marker-labels"
-    //      };
-    //    }
-    //  }
-    //
-    //}
+    
   })
 
 
@@ -146,6 +137,43 @@ angular.module('starter.controllers', [])
   //.controller('MapCtrl', function($scope, $ionicLoading, $compile) {
   //
   //})
+
+  .controller('UpdateCtrl', function ($scope, $cordovaCamera, $cordovaGeolocation, QRID, $http) {
+
+
+    $http({
+        url: 'http://45.79.159.147:3000/create',
+        method: 'POST',
+        data: jsonObj,
+        //data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(function (data) {
+
+        // if (data.data.token) {
+        //   sessionStorage.setItem("token",data.data.token);
+        return $state.go('tab.dash');
+        // } else {
+        //   return $state.go('login');
+        // }
+      })
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  })
 
 
   .controller('CreateCtrl', function ($scope, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
@@ -318,31 +346,7 @@ angular.module('starter.controllers', [])
         // An error occured. Show a message to the user
       });
     };
-    $ionicModal.fromTemplateUrl('my-modal.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function (modal) {
-      $scope.modal = modal;
-    });
-    $scope.openModal = function () {
-      $scope.modal.show();
-    };
-    $scope.closeModal = function () {
-      $scope.modal.hide();
-    };
-    //Cleanup the modal when we're done with it!
-    $scope.$on('$destroy', function () {
-      $scope.modal.remove();
-    });
-    // Execute action on hide modal
-    $scope.$on('modal.hidden', function () {
-      // Execute action
-    });
-    // Execute action on remove modal
-    $scope.$on('modal.removed', function () {
-      // Execute action
-    });
-
+    
     $scope.save = function () {
       var jsonObj = getAllDataAsJson();
       
