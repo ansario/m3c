@@ -72,7 +72,7 @@ app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
 
             res.send(dviMap);  
         });
-  });
+  })
 
        app.get('/users', function(req, res) {
           
