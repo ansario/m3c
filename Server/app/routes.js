@@ -85,7 +85,7 @@ module.exports = function(app, passport, jwt) {
             // res.send(user_id + ' ' + token + ' ' + geo);
 
             DVI.find({
-                'pr_id': user_id,
+                'qr_id': user_id
             }, function(err, user) {
 
                 res.send(user);
