@@ -48,6 +48,10 @@ angular.module('starter.controllers', [])
 
     }, false);
 
+  $scope.goBack = function () {
+    $state.go('tab.dash');
+  }
+
 })
 
 .controller('RegisterCtrl', function($scope, $http, $state) {
@@ -131,11 +135,27 @@ angular.module('starter.controllers', [])
 
 
 
-.controller('MapCtrl', function($scope, $cordovaGeolocation,$state) {
+.controller('MapCtrl', function($scope, $cordovaGeolocation,$state,$http) {
 
 
     $scope.la = sessionStorage.getItem("lat");
     $scope.lo = sessionStorage.getItem("long");
+
+    $http({
+     url: 'http://45.79.159.147:3000/getall',
+     method: 'GET'
+    }).then(function(data) {
+      $scope.allBodies = data.data;
+      $scope.fakeLat = data.data['56a4599963594dbc4dd0e92e'].geotag.latitude;
+      $scope.fakeLong = data.data['56a4599963594dbc4dd0e92e'].geotag.longitude;
+      console.log($scope.fakeLat);
+      console.log($scope.fakeLong);
+      console.log("fake stuff^^");
+
+      //console.log($scope.allBodies);
+    });
+
+
 
     $scope.goBack = function () {
       $state.go('tab.dash');
@@ -150,7 +170,7 @@ angular.module('starter.controllers', [])
 //
 //})
 
-.controller('UpdateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, QRID, $http) {
+.controller('UpdateCtrl', function($scope, $state, $cordovaCamera, $cordovaGeolocation, QRID, $http) {
 
 
     $http({
@@ -174,6 +194,13 @@ angular.module('starter.controllers', [])
         //   return $state.go('login');
         // }
     })
+
+     $scope.goBack = function () {
+         $state.go('qr-update');
+  }
+
+
+
 })
 
 
@@ -371,7 +398,7 @@ angular.module('starter.controllers', [])
     };
 
     $scope.goBack = function () {
-      $state.go('qr');
+      $state.go('qr-create');
     }
 
 

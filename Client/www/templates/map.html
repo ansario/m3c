@@ -14,13 +14,13 @@
       </ion-nav-view>
 
 
+
     <div class="mapWrap"  data-tap-disabled="true">
 
 
        <ng-map id="map" center='{{la}}, {{lo}}' zoom="12">
-       <marker position='{{la}}, {{lo}}' title="Hello World!"></marker>
-       </ng-map>
-
+        <marker ng-repeat="(key,value) in allBodies" position='{{value.geotag.latitude}},{{value.geotag.longitude}}' title="test"></marker>
+      </ng-map>
 
     </div>
 
