@@ -61,7 +61,7 @@ app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
 
   });
 
-        app.post('/get', function(req, res) {
+        app.post('/getall', function(req, res) {
 
               DVI.find({}, function(err, users) {
                 var dviMap = {};
