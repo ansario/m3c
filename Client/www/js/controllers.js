@@ -22,6 +22,10 @@ angular.module('starter.controllers', [])
 
 }, false);
 
+
+  $scope.goBack = function (){
+    $state.go('tab.dash')
+  }
 })
 
 .controller('RegisterCtrl', function($scope, $http, $state) {
@@ -58,6 +62,10 @@ angular.module('starter.controllers', [])
         // }
       })
    }
+
+  $scope.goBack = function () {
+    $state.go('login');
+  }
 
 
 })
@@ -101,54 +109,22 @@ angular.module('starter.controllers', [])
 
 
 
-  .controller('MapCtrl', function($scope, $cordovaGeolocation) {
+  .controller('MapCtrl', function($scope, $state) {
 
 
     $scope.la = sessionStorage.getItem("lat");
     $scope.lo = sessionStorage.getItem("long");
 
+    $scope.goBack = function () {
+      $state.go('tab.dash');
+    }
 
-    //$scope.addMarker() = function () {
-    //  id: 0,
-    //    coords
-    //  :
-    //  {
-    //    latitude: $scope.la
-    //    longitude: $scope.lo
-    //  }
-    //  ,
-    //  options: {
-    //    draggable: true
-    //  }
-    //  ,
-    //  events: {
-    //    dragend: function (marker, eventName, args) {
-    //      $log.log('marker dragend');
-    //      var lat = marker.getPosition().lat();
-    //      var lon = marker.getPosition().lng();
-    //      $log.log(lat);
-    //      $log.log(lon);
-    //
-    //      $scope.marker.options = {
-    //        draggable: true,
-    //        labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
-    //        labelAnchor: "100 0",
-    //        labelClass: "marker-labels"
-    //      };
-    //    }
-    //  }
-    //
-    //}
+
   })
 
 
 
-  //.controller('MapCtrl', function($scope, $ionicLoading, $compile) {
-  //
-  //})
-
-
-  .controller('CreateCtrl', function ($scope, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
+  .controller('CreateCtrl', function ($scope, $state, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
 
     $scope.descriptionFields = [
       {
@@ -366,6 +342,10 @@ angular.module('starter.controllers', [])
       })
     };
 
+    $scope.goBack = function () {
+      $state.go('qr');
+    }
+
 
     $scope.getLoc = function () {
 
@@ -376,6 +356,7 @@ angular.module('starter.controllers', [])
 
       console.log($scope.geoString);
     };
+
 
 
   });

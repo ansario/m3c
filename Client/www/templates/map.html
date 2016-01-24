@@ -1,9 +1,17 @@
 <ion-view view-title="View Map">
+  <ion-nav-bar>
+
+  <!--<ion-nav-back-button>-->
 
   <ion-content scroll="false">
 
+    <ion-nav-view>
+        <ion-nav-buttons side="primary">
+          <button class="button  ion-android-arrow-back" ng-click="goBack()">
+          </button>
+        </ion-nav-buttons>
 
-
+      </ion-nav-view>
 
 
     <div class="mapWrap"  data-tap-disabled="true">
@@ -19,5 +27,7 @@
 
 
   </ion-content>
+    <!--</ion-nav-back-button>-->
+    <ion-nav-bar>
 
 </ion-view>
