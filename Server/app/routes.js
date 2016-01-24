@@ -72,4 +72,19 @@ app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
 
                 res.send(dviMap);
             });
-        })};
+        })
+
+        app.get(/:id/, function (req, res) {
+          var id = request.params[0];
+          
+          DVI.findOne({_id : id}, function (err, user){
+
+            res.send(user);
+          })
+
+
+        });
+
+      };
+
+
