@@ -1,8 +1,17 @@
 <ion-view view-title="View Map">
+  <ion-nav-bar>
+
+  <!--<ion-nav-back-button>-->
 
   <ion-content scroll="false">
 
+    <ion-nav-view>
+        <ion-nav-buttons side="primary">
+          <button class="button  ion-android-arrow-back" ng-click="goBack()">
+          </button>
+        </ion-nav-buttons>
 
+      </ion-nav-view>
 
 
 
@@ -10,14 +19,15 @@
 
 
        <ng-map id="map" center='{{la}}, {{lo}}' zoom="12">
-       <marker position='{{la}}, {{lo}}' title="Hello World!"></marker>
-       </ng-map>
-
+        <marker ng-repeat="(key,value) in allBodies" position='{{value.geotag.latitude}},{{value.geotag.longitude}}' title="test"></marker>
+      </ng-map>
 
     </div>
 
 
 
   </ion-content>
+    <!--</ion-nav-back-button>-->
+    <ion-nav-bar>
 
 </ion-view>

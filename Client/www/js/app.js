@@ -89,11 +89,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   .state('qr', {
     url: '/qr',
-    controller: 'QRCtrl',
-    templateUrl: 'templates/qr.html'
+    controller: 'CreateQRCtrl',
+    templateUrl: 'templates/qr-create.html'
   })
 
-  
+
   .state('create', {
     url: '/create',
     controller: 'CreateCtrl',

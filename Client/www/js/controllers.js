@@ -3,12 +3,15 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', function($scope, $state) {
 
     $scope.create = function() {
-        $state.go('qr');
+        $state.go('qr-create');
     }
 
+    $scope.update = function() {
+        $state.go('qr-update');
+    }
 })
 
-.controller('QRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
+.controller('CreateQRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
 
     document.addEventListener("deviceready", function() {
 
@@ -23,9 +26,32 @@ angular.module('starter.controllers', [])
 
     }, false);
 
+
+  $scope.goBack = function (){
+    $state.go('tab.dash')
+  }
 })
 
+.controller('UpdateQRCtrl', function($scope, $state, $cordovaBarcodeScanner, QRID) {
 
+    document.addEventListener("deviceready", function() {
+
+        $cordovaBarcodeScanner
+            .scan()
+            .then(function(barcodeData) {
+                QRID.setID(barcodeData.text);
+                $state.go('update');
+            }, function(error) {
+                // An error occurred
+            });
+
+    }, false);
+
+  $scope.goBack = function () {
+    $state.go('tab.dash');
+  }
+
+})
 
 .controller('RegisterCtrl', function($scope, $http, $state) {
 
@@ -61,6 +87,10 @@ angular.module('starter.controllers', [])
             // }
         })
     }
+
+  $scope.goBack = function () {
+    $state.go('login');
+  }
 
 
 })
@@ -104,137 +134,110 @@ angular.module('starter.controllers', [])
 
 
 
-.controller('MapCtrl', function($scope, $cordovaGeolocation) {
+.controller('MapCtrl', function($scope, $cordovaGeolocation,$state,$http) {
 
 
     $scope.la = sessionStorage.getItem("lat");
     $scope.lo = sessionStorage.getItem("long");
 
+    $http({
+     url: 'http://45.79.159.147:3000/getall',
+     method: 'GET'
+    }).then(function(data) {
+      $scope.allBodies = data.data;
+      $scope.fakeLat = data.data['56a4599963594dbc4dd0e92e'].geotag.latitude;
+      $scope.fakeLong = data.data['56a4599963594dbc4dd0e92e'].geotag.longitude;
+      console.log($scope.fakeLat);
+      console.log($scope.fakeLong);
+      console.log("fake stuff^^");
+
+      //console.log($scope.allBodies);
+    });
+
+
+
+    $scope.goBack = function () {
+      $state.go('tab.dash');
+    }
 
 
 })
 
 
 
-//.controller('MapCtrl', function($scope, $ionicLoading, $compile) {
-//
-//})
-
-
-
-.controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
-    
-
-
-    $scope.init = function () {
-
-      $http({
-            url: 'http://45.79.159.147:3000/users?id='+QRID.getID,
-            method: 'GET',
-      }).then(function(data) {
-
-
-        $scope.user = data;
-
-        if ($scope.user) {
-
-          // get id/status/location data
-        $scope.qrid = $scope.user.qr_id;
-        $scope.identityField.value = $scope.user.possible_identity;
-        $scope.statusField.value = $scope.user.status;
-        $scope.latString = $scope.user.geotag.latitude;
-        $scope.longString = $scope.user.geotag.longitude;
-
-        //  // get all physical description data points
-        // $scope.user.physical_description = $scope.descriptionFields.reduce(function(m, v) {
-        //     m[v.key] = v.value;
-        //     return m;
-        // }, {});
-
-        // // get all associated evidence fields
-        // jsonObj['associated_evidence'] = $scope.evidenceFields.reduce(function(m, v) {
-        //     m[v.key] = v.value;
-        //     return m;
-        // }, {});
-
-        // // get picture data
-        // jsonObj['recorded_information'] = $scope.pictures;
-       
 
 
 
 
-
-
-
-
-            
-        }
-        
-      })
-    }
-      
-    
-    
-    $scope.init();
-        
+.controller('CreateCtrl', function($scope, $state, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
 
     $scope.descriptionFields = [{
         'key': 'body_condition',
         'name': 'Body Condition',
         'value': 'Unknown',
         'options': ['Complete Body', 'Incomplete Body', 'Body Part']
-    }, {
+      },
+      {
         'key': 'general_condition',
         'name': 'General Condition',
         'value': 'Unknown',
         'options': ['Well Preserved', 'Decomposed', 'Partionally Skeletonized', 'Skeletonized']
-    }, {
+      },
+      {
         'key': 'apparent_sex',
         'name': 'Apparent Sex',
         'value': 'Unknown',
         'options': ['Male', 'Female', 'Probably Male', 'Probably Female']
-    }, {
+      },
+      {
         'key': 'age_group',
         'name': 'Age Group',
         'value': 'Unknown',
         'options': ['Infant', 'Child', 'Adolescent', 'Adult', 'Elderly']
-    }, {
+      },
+      {
         'key': 'height',
         'name': 'Height',
         'value': 'Unknown',
         'options': ['Average', 'Short', 'Tall']
-    }, {
+      },
+      {
         'key': 'weight',
         'name': 'Weight',
         'value': 'Unknown',
         'options': ['Average', 'Slim', 'Fat']
-    }, {
+      },
+      {
         'key': 'eye_color',
         'name': 'Eye Color',
         'value': 'Unknown',
         'options': ['Brown', 'Blue', 'Green', 'Gray', 'Black', 'Hazel']
-    }, {
+      },
+      {
         'key': 'head_hair_color',
         'name': 'Hair Color',
         'value': 'Unknown',
         'options': ['Blonde', 'Brown', 'Black', 'Red', 'Gray']
-    }, {
+      },
+      {
         'key': 'head_hair_length',
         'name': 'Hair Length',
         'value': 'Unknown',
         'options': ['Short', 'Mid-length', 'Long']
-    }, {
+      },
+      {
         'key': 'facial_hair',
         'name': 'Facial Hair',
         'value': 'Unknown',
         'options': ['None', 'Both beard and mustache', 'Beard', 'Mustache']
-    }, {
+      },
+      {
         'key': 'race',
         'name': 'Race',
         'value': 'Unknown',
         'options': ['White', 'Black', 'Asian/Pacific Islander', 'Other']
-    }];
+      }
+    ];
 
     $scope.identityField = {
         'key': 'possible_identity',
@@ -249,63 +252,69 @@ angular.module('starter.controllers', [])
         'options': ['Field', 'Transit', 'Storage', 'Internment', 'Released']
     };
 
-    $scope.evidenceFields = [{
+    $scope.evidenceFields = [
+      {
         'key': 'clothing',
         'name': 'Clothing',
         'placeholder': 'Victim was wearing a red jacket...'
-    }, {
+      },
+      {
         'key': 'footwear',
         'name': 'Footwear',
         'placeholder': 'Victim was wearing steel toed boots...'
-    }, {
+      },
+      {
         'key': 'eyewear',
         'name': 'Eyewear',
         'placeholder': 'Victim was not wearing any eyewear...'
-    }, {
+      },
+      {
         'key': 'personal_items',
         'name': 'Personal Items',
         'placeholder': 'Victim was found with a cell phone...'
-    }, {
+      },
+      {
         'key': 'identity_documents',
         'name': 'Identity Documents',
         'placeholder': 'Victim had a passport on her person...'
-    }];
+      }
+    ];
 
     var getAllDataAsJson = function() {
-        var jsonObj = {};
+      var jsonObj = {};
 
-        // get id/status/location data
-        jsonObj['qr_id'] = $scope.qrid;
-        jsonObj['possible_identity'] = $scope.identityField.value;
-        jsonObj['status'] = $scope.statusField.value;
-        jsonObj['geotag'] = {
-            'latitude': $scope.latString,
-            'longitude': $scope.longString
-        };
+      // get id/status/location data
+      jsonObj['qr_id'] = $scope.qrid;
+      jsonObj['possible_identity'] = $scope.identityField.value;
+      jsonObj['status'] = $scope.statusField.value;
+      jsonObj['geotag'] = {
+        'latitude': $scope.latString,
+        'longitude': $scope.longString
+      };
 
 
-        // get all physical description data points
-        jsonObj['physical_description'] = $scope.descriptionFields.reduce(function(m, v) {
-            m[v.key] = v.value;
-            return m;
-        }, {});
+      // get all physical description data points
+      jsonObj['physical_description'] = $scope.descriptionFields.reduce(function (m, v) {
+        m[v.key] = v.value;
+        return m;
+      }, {});
 
-        // get all associated evidence fields
-        jsonObj['associated_evidence'] = $scope.evidenceFields.reduce(function(m, v) {
-            m[v.key] = v.value;
-            return m;
-        }, {});
+      // get all associated evidence fields
+      jsonObj['associated_evidence'] = $scope.evidenceFields.reduce(function (m, v) {
+        m[v.key] = v.value;
+        return m;
+      }, {});
 
-        // get picture data
-        jsonObj['recorded_information'] = $scope.pictures;
+      // get picture data
+      jsonObj['recorded_information'] = $scope.pictures;
 
-        //console.log(jsonObj);
-        return jsonObj;
+      //console.log(jsonObj);
+      return jsonObj;
     };
-
 
     $scope.qrid = QRID.getID();
     $scope.pictures = {};
+
 
     $scope.takePicture = function(event) {
         var options = {
@@ -330,9 +339,9 @@ angular.module('starter.controllers', [])
         });
     };
 
-    $scope.save = function() {
-        var jsonObj = getAllDataAsJson();
-
+    $scope.save = function () {
+      var jsonObj = getAllDataAsJson();
+      console.log(jsonObj);
 
         $http({
             url: 'http://45.79.159.147:3000/create',
@@ -353,11 +362,20 @@ angular.module('starter.controllers', [])
         })
     };
 
+    $scope.goBack = function () {
+      $state.go('qr');
+    }
 
 
-    $scope.latString = sessionStorage.getItem("lat").toString();
-    $scope.longString = sessionStorage.getItem("long").toString();
-    $scope.geoString = "(" + $scope.latString + "," + $scope.longString + ")";
+    $scope.getLoc = function () {
+
+      var latString = sessionStorage.getItem("lat").toString();
+      var longString = sessionStorage.getItem("long").toString();
+      $scope.geoString = "(" + latString + "," + longString + ")";
+
+
+      console.log($scope.geoString);
+    };
 
 
 });

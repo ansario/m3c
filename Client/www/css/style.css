@@ -11,3 +11,25 @@
 }
 
 
+#tabButton1, #tabButton2 {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  background-color: #282bff;
+}
+
+/*body{margin-bottom: 10%; margin-top: 10%; margin-left: 10%; margin-right: 10%}*/
+
+
+.center{display:inline-block;}
+
+.container {width:600px;
+  margin:0 auto 0 auto;
+  padding:10px;
+  background:#ffffff; }
+
+
+.container1 {width:1100px;
+  margin:0 auto 0 auto;
+  padding:10px;
+  background:#ffffff; }
