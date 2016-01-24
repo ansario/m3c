@@ -148,247 +148,234 @@ angular.module('starter.controllers', [])
   //})
 
 
-.controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, QRID, $ionicModal) {
+  .controller('CreateCtrl', function ($scope, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
 
-.controller('CreateCtrl', function($scope, $cordovaCamera, $cordovaGeolocation, $ionicPopup, QRID, $http, $ionicModal) {
+    $scope.descriptionFields = [
+      {
+        'key': 'body_condition',
+        'name': 'Body Condition',
+        'value': 'Unknown',
+        'options': ['Complete Body', 'Incomplete Body', 'Body Part']
+      },
+      {
+        'key': 'general_condition',
+        'name': 'General Condition',
+        'value': 'Unknown',
+        'options': ['Well Preserved', 'Decomposed', 'Partionally Skeletonized', 'Skeletonized']
+      },
+      {
+        'key': 'apparent_sex',
+        'name': 'Apparent Sex',
+        'value': 'Unknown',
+        'options': ['Male', 'Female', 'Probably Male', 'Probably Female']
+      },
+      {
+        'key': 'age_group',
+        'name': 'Age Group',
+        'value': 'Unknown',
+        'options': ['Infant', 'Child', 'Adolescent', 'Adult', 'Elderly']
+      },
+      {
+        'key': 'height',
+        'name': 'Height',
+        'value': 'Unknown',
+        'options': ['Average', 'Short', 'Tall']
+      },
+      {
+        'key': 'weight',
+        'name': 'Weight',
+        'value': 'Unknown',
+        'options': ['Average', 'Slim', 'Fat']
+      },
+      {
+        'key': 'eye_color',
+        'name': 'Eye Color',
+        'value': 'Unknown',
+        'options': ['Brown', 'Blue', 'Green', 'Gray', 'Black', 'Hazel']
+      },
+      {
+        'key': 'head_hair_color',
+        'name': 'Hair Color',
+        'value': 'Unknown',
+        'options': ['Blonde', 'Brown', 'Black', 'Red', 'Gray']
+      },
+      {
+        'key': 'head_hair_length',
+        'name': 'Hair Length',
+        'value': 'Unknown',
+        'options': ['Short', 'Mid-length', 'Long']
+      },
+      {
+        'key': 'facial_hair',
+        'name': 'Facial Hair',
+        'value': 'Unknown',
+        'options': ['None', 'Both beard and mustache', 'Beard', 'Mustache']
+      },
+      {
+        'key': 'race',
+        'name': 'Race',
+        'value': 'Unknown',
+        'options': ['White', 'Black', 'Asian/Pacific Islander', 'Other']
+      }
+    ];
 
-  $scope.descriptionFields = [
-    { 'key':'body_condition',
-      'name': 'Body Condition',
+    $scope.identityField = {
+      'key': 'possible_identity',
+      'name': 'Possible Identity',
+      'placeholder': 'John'
+    };
+
+    $scope.statusField = {
+      'key': 'status',
+      'name': 'Status',
       'value': 'Unknown',
-      'options': ['Complete Body', 'Incomplete Body', 'Body Part']
-    },
-    { 'key':'general_condition',
-      'name': 'General Condition',
-      'value': 'Unknown',
-      'options': ['Well Preserved', 'Decomposed', 'Partionally Skeletonized', 'Skeletonized']
-    },
-    { 'key':'apparent_sex',
-      'name': 'Apparent Sex',
-      'value': 'Unknown',
-      'options': ['Male', 'Female', 'Probably Male', 'Probably Female']
-    },
-    { 'key':'age_group',
-      'name': 'Age Group',
-      'value': 'Unknown',
-      'options': ['Infant', 'Child', 'Adolescent', 'Adult', 'Elderly']
-    },
-    { 'key':'height',
-      'name': 'Height',
-      'value': 'Unknown',
-      'options': ['Average', 'Short', 'Tall']
-    },
-    { 'key':'weight',
-      'name': 'Weight',
-      'value': 'Unknown',
-      'options': ['Average', 'Slim', 'Fat']
-    },
-    { 'key':'eye_color',
-      'name': 'Eye Color',
-      'value': 'Unknown',
-      'options': ['Brown', 'Blue', 'Green', 'Gray', 'Black', 'Hazel']
-    },
-    { 'key':'head_hair_color',
-      'name': 'Hair Color',
-      'value': 'Unknown',
-      'options': ['Blonde', 'Brown', 'Black', 'Red','Gray']
-    },
-    { 'key':'head_hair_length',
-      'name': 'Hair Length',
-      'value': 'Unknown',
-      'options': ['Short', 'Mid-length', 'Long']
-    },
-    { 'key':'facial_hair',
-      'name': 'Facial Hair',
-      'value': 'Unknown',
-      'options': ['None', 'Both beard and mustache', 'Beard', 'Mustache']
-    },
-    { 'key':'race',
-      'name': 'Race',
-      'value': 'Unknown',
-      'options': ['White', 'Black', 'Asian/Pacific Islander', 'Other']
-    }
-  ];
+      'options': ['Field', 'Transit', 'Storage', 'Internment', 'Released']
+    };
 
-  $scope.identityField = {
-    'key':'possible_identity',
-    'name':'Possible Identity',
-    'placeholder':'John'
-  };
+    $scope.evidenceFields = [
+      {
+        'key': 'clothing',
+        'name': 'Clothing',
+        'placeholder': 'Victim was wearing a red jacket...'
+      },
+      {
+        'key': 'footwear',
+        'name': 'Footwear',
+        'placeholder': 'Victim was wearing steel toed boots...'
+      },
+      {
+        'key': 'eyewear',
+        'name': 'Eyewear',
+        'placeholder': 'Victim was not wearing any eyewear...'
+      },
+      {
+        'key': 'personal_items',
+        'name': 'Personal Items',
+        'placeholder': 'Victim was found with a cell phone...'
+      },
+      {
+        'key': 'identity_documents',
+        'name': 'Identity Documents',
+        'placeholder': 'Victim had a passport on her person...'
+      }
+    ];
 
-  $scope.statusField = {
-    'key': 'status',
-    'name': 'Status',
-    'value': 'Unknown',
-    'options': ['Field', 'Transit', 'Storage', 'Internment', 'Released']
-  };
+    var getAllDataAsJson = function () {
+      var jsonObj = {};
 
-  $scope.evidenceFields = [
-    { 'key': 'clothing',
-      'name': 'Clothing',
-      'placeholder':'Victim was wearing a red jacket...'
-    },
-    { 'key': 'footwear',
-      'name': 'Footwear',
-      'placeholder':'Victim was wearing steel toed boots...'
-    },
-    { 'key': 'eyewear',
-      'name': 'Eyewear',
-      'placeholder':'Victim was not wearing any eyewear...'
-    },
-    { 'key': 'personal_items',
-      'name': 'Personal Items',
-      'placeholder':'Victim was found with a cell phone...'
-    },
-    { 'key': 'identity_documents',
-      'name': 'Identity Documents',
-      'placeholder':'Victim had a passport on her person...'
-    }
-  ];
+      // get id/status/location data
+      jsonObj['qr_id'] = $scope.qrid;
+      jsonObj['possible_identity'] = $scope.identityField.value;
+      jsonObj['status'] = $scope.statusField.value;
+      jsonObj['geotag'] = {
+        'latitude': $scope.latString,
+        'longitude': $scope.longString
+      };
 
-  $scope.getLoc = function() {
 
-   $cordovaGeolocation
-     .getCurrentPosition()
-     .then(function(position) {
-       var lat = position.coords.latitude;
-       var long = position.coords.longitude;
+      // get all physical description data points
+      jsonObj['physical_description'] = $scope.descriptionFields.reduce(function (m, v) {
+        m[v.key] = v.value;
+        return m;
+      }, {});
 
-       $scope.latString = lat.toString();
-       $scope.longString = long.toString();
-       $scope.geoString  = "(" + $scope.latString + "," + $scope.longString + ")";
+      // get all associated evidence fields
+      jsonObj['associated_evidence'] = $scope.evidenceFields.reduce(function (m, v) {
+        m[v.key] = v.value;
+        return m;
+      }, {});
 
-       //console.log($scope.geoString);
-     }, function(err) {
+      // get picture data
+      jsonObj['recorded_information'] = $scope.pictures;
 
-       //An error occurred. Show message to the user
-     });
-
-  }
-
-  var getAllDataAsJson = function() {
-    var jsonObj = {};
-
-    // get id/status/location data
-    jsonObj['qr_id'] = $scope.qrid;
-    jsonObj['possible_identity'] = $scope.identityField.value;
-    jsonObj['status'] = $scope.statusField.value;
-    jsonObj['geotag'] = {
-      'latitude': $scope.latString,
-      'longitude': $scope.longString
+      //console.log(jsonObj);
+      return jsonObj;
     };
 
 
-    // get all physical description data points
-    jsonObj['physical_description'] = $scope.descriptionFields.reduce(function(m, v) {
-      m[v.key] = v.value;
-      return m;
-    }, {});
+    $scope.qrid = QRID.getID();
+    $scope.pictures = {};
 
-    // get all associated evidence fields
-    jsonObj['associated_evidence'] = $scope.evidenceFields.reduce(function(m, v) {
-      m[v.key] = v.value;
-      return m;
-    }, {});
+    $scope.takePicture = function (event) {
+      var options = {
+        quality: 75,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: true,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 300,
+        targetHeight: 300,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: false
+      };
 
-    // get picture data
-    jsonObj['recorded_information'] = $scope.pictures;
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+        $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        var value = event.target.id;
+        $scope.pictures[value] = $scope.imgURI;
 
-    //console.log(jsonObj);
-    return jsonObj;
-  };
-
-
-
-  $scope.qrid = QRID.getID();
-  $scope.pictures = {};
-
-  $scope.takePicture = function(event) {
-        var options = {
-            quality : 75,
-            destinationType : Camera.DestinationType.DATA_URL,
-            sourceType : Camera.PictureSourceType.CAMERA,
-            allowEdit : true,
-            encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 300,
-            targetHeight: 300,
-            popoverOptions: CameraPopoverOptions,
-            saveToPhotoAlbum: false
-        };
-
-        $cordovaCamera.getPicture(options).then(function(imageData) {
-            $scope.imgURI = "data:image/jpeg;base64," + imageData;
-            var value = event.target.id;
-            $scope.pictures[value] = $scope.imgURI;
-
-        }, function(err) {
-            // An error occured. Show a message to the user
-        });
-    }
+      }, function (err) {
+        // An error occured. Show a message to the user
+      });
+    };
     $ionicModal.fromTemplateUrl('my-modal.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-  $scope.openModal = function() {
-    $scope.modal.show();
-  };
-  $scope.closeModal = function() {
-    $scope.modal.hide();
-  };
-  //Cleanup the modal when we're done with it!
-  $scope.$on('$destroy', function() {
-    $scope.modal.remove();
-  });
-  // Execute action on hide modal
-  $scope.$on('modal.hidden', function() {
-    // Execute action
-  });
-  // Execute action on remove modal
-  $scope.$on('modal.removed', function() {
-    // Execute action
-  });
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.modal = modal;
+    });
+    $scope.openModal = function () {
+      $scope.modal.show();
+    };
+    $scope.closeModal = function () {
+      $scope.modal.hide();
+    };
+    //Cleanup the modal when we're done with it!
+    $scope.$on('$destroy', function () {
+      $scope.modal.remove();
+    });
+    // Execute action on hide modal
+    $scope.$on('modal.hidden', function () {
+      // Execute action
+    });
+    // Execute action on remove modal
+    $scope.$on('modal.removed', function () {
+      // Execute action
+    });
 
-    $scope.save = function() {
+    $scope.save = function () {
       var jsonObj = getAllDataAsJson();
       console.log(jsonObj);
 
-      $http ({
-          url: 'http://ansario.com:3000/create',
-          method: 'POST',
-          data: jsonObj,
-          //data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }).then(function(data) {
+      $http({
+        url: 'http://ansario.com:3000/create',
+        method: 'POST',
+        data: jsonObj,
+        //data: "email="+encodeURIComponent(emailaddress)+"&password="+encodeURIComponent(password),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(function (data) {
 
-          // if (data.data.token) {
-          //   sessionStorage.setItem("token",data.data.token);
-          //   return $state.go('tab.dash');
-          // } else {
-          //   return $state.go('login');
-          // }
-        })
-    }
-
-
-
-  $scope.getLoc = function() {
-
-       var latString = sessionStorage.getItem("lat").toString();
-       var longString = sessionStorage.getItem("long").toString();
-       $scope.geoString  = "(" + latString + "," + longString + ")";
+        // if (data.data.token) {
+        //   sessionStorage.setItem("token",data.data.token);
+        //   return $state.go('tab.dash');
+        // } else {
+        //   return $state.go('login');
+        // }
+      })
+    };
 
 
-       console.log($scope.geoString);
-     }, function(err) {
+    $scope.getLoc = function () {
 
-       //An error occurred. Show message to the user
-     }
-
-
+      var latString = sessionStorage.getItem("lat").toString();
+      var longString = sessionStorage.getItem("long").toString();
+      $scope.geoString = "(" + latString + "," + longString + ")";
 
 
-});
+      console.log($scope.geoString);
+    };
+
+
+  });
