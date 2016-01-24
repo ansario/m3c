@@ -2,10 +2,9 @@
   <h2>Current Disaster Information</h2>
 
   <div ng-show="loading">LOADING...</div>
-  <div ng-show="!loading">{{allBodies}}</div>
-
-  <table class="table table-condensed">
-    <thead>
+  <div ng-show="!loading">
+    <table class="table table-condensed">
+      <thead>
       <tr>
         <th>ID Number</th>
         <th>Possible ID</th>
@@ -13,37 +12,23 @@
         <th>Geotag</th>
         <th>Description</th>
         <th>Evidence</th>
-        <th>Recorded Documentation</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>ACWEE</td>
-        <td>James Wilson</td>
-        <td>Field</td>
-        <td>32.4, 42.3</td>
-        <td>{{longString | characters:truncationLimit}}</td>
-        <td>Two shells were collected...</td>
-        <td>3 Pictures</td>
-      </tr>
-      <tr>
-        <td>WQEAS</td>
-        <td>Joan Air</td>
-        <td>Released</td>
-        <td>31.0, 42.1</td>
-        <td>User was found with a ...</td>
-        <td>No evidence was found at ...</td>
-        <td>3 Pictures</td>
-      </tr>
-      <tr>
-        <td>ACWEE</td>
-        <td>Greg Hugh</td>
-        <td>Transit</td>
-        <td>12.4, 30.3</td>
-        <td>User was found with a cane...</td>
-        <td>No evidence was found at ...</td>
-        <td>3 Pictures</td>
-      </tr>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <tr ng-repeat="(key, value) in allBodies">
+          <td>{{value.qr_id}}</td>
+          <td>{{value.possible_identity}}</td>
+          <td>{{value.status}}</td>
+          <td>{{value.geotag.latitude + ', ' + value.geotag.longitude}}</td>
+          <td>{{value.physical_description | tableDescription | characters:truncationLimit}}</td>
+          <td>{{value.associated_evidence | tableDescription | characters:truncationLimit}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+  </div>
+
+
 </div>

@@ -12,16 +12,26 @@ angular.module('adminApp')
       $scope.data = {};
       $scope.loading = true;
 
-      $scope.truncationLimit = 20;
-      $scope.longString = "THIS IS A LONG STRING HAH Ha ha okay some more words please thank you bye"
+      $scope.truncationLimit = 70;
 
       $http({
         url: 'http://45.79.159.147:3000/getall',
         method: 'GET'
       }).then(function(data) {
-        $scope.allBodies = data;
+        $scope.allBodies = data.data;
         $scope.loading = false;
       });
 
 
-});
+})
+  .filter('tableDescription', function() {
+    return function(input) {
+      var arr = Object.keys(input);
+      return arr.filter(function (element, index, array) {
+          return input[element] && input[element] !== "Unknown" && input[element] !== "";
+        })
+        .reduce(function (prev, curr) {
+          return prev + curr + ': ' + input[curr] + ', ';
+        }, '');
+    };
+  });
