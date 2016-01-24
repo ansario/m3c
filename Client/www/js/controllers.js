@@ -69,7 +69,7 @@ angular.module('starter.controllers', [])
     $scope.login = function() {
     emailaddress = $scope.data.emailaddress;
     password = $scope.data.password;
-
+    emailaddress = emailaddress.toLowerCase();
 
     $http ({
         url: 'http://ansario.com:3000/login',
