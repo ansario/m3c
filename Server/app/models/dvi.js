@@ -5,7 +5,10 @@ var dviSchema = mongoose.Schema({
     qr_id: String,
     possible_identity: String,
     status: String,
-    geotag: String,
+    geotag: {
+        latitude: String,
+        longitude: String
+    },
     physical_description: {
       body_condition:String,
       general_condition:String,
@@ -27,13 +30,13 @@ var dviSchema = mongoose.Schema({
       identity_documents: String
     },
     recorded_information: {
-      full_length_img: { data: Buffer, contentType: String },
-      upper_half_img: { data: Buffer, contentType: String },
-      lower_half_img: { data: Buffer, contentType: String },
-      fvoh_img: { data: Buffer, contentType: String },
-      elevated_view_img: { data: Buffer, contentType: String },
-      unique_features_img: { data: Buffer, contentType: String },
-      personal_effects_img: { data: Buffer, contentType: String }
+      full_length_img: Buffer,
+      upper_half_img: Buffer,
+      lower_half_img: Buffer,
+      fvoh_img: Buffer,
+      elevated_view_img: Buffer,
+      unique_features_img: Buffer,
+      personal_effects_img: Buffer
     }
     //a.img.data = fs.readFileSync(imgPath);
     //a.img.contentType = 'image/png';
