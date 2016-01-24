@@ -280,7 +280,12 @@ angular.module('starter.controllers', [])
       }
     ];
 
-    var getAllDataAsJson = function() {
+  $scope.latString = sessionStorage.getItem("lat");
+  $scope.longString = sessionStorage.getItem("long");
+  $scope.geoString = '(' + $scope.latString + ', ' + $scope.longString + ')';
+
+
+  var getAllDataAsJson = function() {
       var jsonObj = {};
 
       // get id/status/location data
