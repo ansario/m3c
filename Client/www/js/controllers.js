@@ -345,7 +345,7 @@ angular.module('starter.controllers', [])
 
     $scope.save = function () {
       var jsonObj = getAllDataAsJson();
-      console.log(jsonObj);
+      
 
       $http({
         url: 'http://ansario.com:3000/create',
@@ -359,7 +359,7 @@ angular.module('starter.controllers', [])
 
         // if (data.data.token) {
         //   sessionStorage.setItem("token",data.data.token);
-        //   return $state.go('tab.dash');
+        return $state.go('tab.dash');
         // } else {
         //   return $state.go('login');
         // }
