@@ -55,6 +55,8 @@ app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
         newDVI.recorded_information.eleveated_view_img = req.body.recorded_information.eleveated_view_img or "Unknown";
         newDVI.recorded_information.unique_features_img = req.body.recorded_information.unique_features_img or "Unknown";
         newDVI.recorded_information.personal_effects_img = req.body.recorded_information.personal_effects_img or "Unknown";
+
+        newDVI.save();
   });
       
   });
