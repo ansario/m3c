@@ -59,6 +59,6 @@ app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
         newDVI.save();
   });
       
-  });
+  
 
 };
